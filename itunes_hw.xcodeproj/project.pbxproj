@@ -7,25 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A28DC582554E2E8006A84A3 /* DatabaseModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A28DC562554E2E8006A84A3 /* DatabaseModel.xcdatamodeld */; };
+		3A28DC9A25551238006A84A3 /* EntityClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A28DC9925551238006A84A3 /* EntityClasses.swift */; };
 		3A9BC76025535FD30084E928 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9BC75F25535FD30084E928 /* AppDelegate.swift */; };
 		3A9BC76225535FD30084E928 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9BC76125535FD30084E928 /* SceneDelegate.swift */; };
-		3A9BC76425535FD30084E928 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9BC76325535FD30084E928 /* ViewController.swift */; };
 		3A9BC76725535FD30084E928 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A9BC76525535FD30084E928 /* Main.storyboard */; };
-		3A9BC76A25535FD30084E928 /* itunes_hw.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A9BC76825535FD30084E928 /* itunes_hw.xcdatamodeld */; };
 		3A9BC76C25535FD60084E928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9BC76B25535FD60084E928 /* Assets.xcassets */; };
 		3A9BC76F25535FD60084E928 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A9BC76D25535FD60084E928 /* LaunchScreen.storyboard */; };
+		3ACDDB5825558CEC004CA54E /* CodableStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACDDB5725558CEC004CA54E /* CodableStructs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A28DC572554E2E8006A84A3 /* DatabaseModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DatabaseModel.xcdatamodel; sourceTree = "<group>"; };
+		3A28DC9925551238006A84A3 /* EntityClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityClasses.swift; sourceTree = "<group>"; };
 		3A9BC75C25535FD30084E928 /* itunes_hw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itunes_hw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9BC75F25535FD30084E928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A9BC76125535FD30084E928 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3A9BC76325535FD30084E928 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3A9BC76625535FD30084E928 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3A9BC76925535FD30084E928 /* itunes_hw.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = itunes_hw.xcdatamodel; sourceTree = "<group>"; };
 		3A9BC76B25535FD60084E928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A9BC76E25535FD60084E928 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3A9BC77025535FD60084E928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3ACDDB5725558CEC004CA54E /* CodableStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableStructs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A28DC522554CAA9006A84A3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3A28DC532554CAB7006A84A3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3A28DC562554E2E8006A84A3 /* DatabaseModel.xcdatamodeld */,
+				3A28DC9925551238006A84A3 /* EntityClasses.swift */,
+				3ACDDB5725558CEC004CA54E /* CodableStructs.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3A28DC542554CABD006A84A3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		3A9BC75325535FD20084E928 = {
 			isa = PBXGroup;
 			children = (
@@ -58,16 +84,25 @@
 		3A9BC75E25535FD30084E928 /* itunes_hw */ = {
 			isa = PBXGroup;
 			children = (
-				3A9BC75F25535FD30084E928 /* AppDelegate.swift */,
-				3A9BC76125535FD30084E928 /* SceneDelegate.swift */,
-				3A9BC76325535FD30084E928 /* ViewController.swift */,
+				3A28DC542554CABD006A84A3 /* ViewModels */,
+				3A28DC532554CAB7006A84A3 /* Models */,
+				3A28DC522554CAA9006A84A3 /* Views */,
+				3A9BC77725535FFE0084E928 /* utilities */,
 				3A9BC76525535FD30084E928 /* Main.storyboard */,
-				3A9BC76B25535FD60084E928 /* Assets.xcassets */,
-				3A9BC76D25535FD60084E928 /* LaunchScreen.storyboard */,
-				3A9BC77025535FD60084E928 /* Info.plist */,
-				3A9BC76825535FD30084E928 /* itunes_hw.xcdatamodeld */,
 			);
 			path = itunes_hw;
+			sourceTree = "<group>";
+		};
+		3A9BC77725535FFE0084E928 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3A9BC77025535FD60084E928 /* Info.plist */,
+				3A9BC76D25535FD60084E928 /* LaunchScreen.storyboard */,
+				3A9BC76B25535FD60084E928 /* Assets.xcassets */,
+				3A9BC76125535FD30084E928 /* SceneDelegate.swift */,
+				3A9BC75F25535FD30084E928 /* AppDelegate.swift */,
+			);
+			path = utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,8 +175,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A9BC76A25535FD30084E928 /* itunes_hw.xcdatamodeld in Sources */,
-				3A9BC76425535FD30084E928 /* ViewController.swift in Sources */,
+				3A28DC9A25551238006A84A3 /* EntityClasses.swift in Sources */,
+				3ACDDB5825558CEC004CA54E /* CodableStructs.swift in Sources */,
+				3A28DC582554E2E8006A84A3 /* DatabaseModel.xcdatamodeld in Sources */,
 				3A9BC76025535FD30084E928 /* AppDelegate.swift in Sources */,
 				3A9BC76225535FD30084E928 /* SceneDelegate.swift in Sources */,
 			);
@@ -291,7 +327,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = itunes_hw/Info.plist;
+				INFOPLIST_FILE = itunes_hw/utilities/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -309,7 +345,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = itunes_hw/Info.plist;
+				INFOPLIST_FILE = itunes_hw/utilities/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -345,13 +381,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		3A9BC76825535FD30084E928 /* itunes_hw.xcdatamodeld */ = {
+		3A28DC562554E2E8006A84A3 /* DatabaseModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				3A9BC76925535FD30084E928 /* itunes_hw.xcdatamodel */,
+				3A28DC572554E2E8006A84A3 /* DatabaseModel.xcdatamodel */,
 			);
-			currentVersion = 3A9BC76925535FD30084E928 /* itunes_hw.xcdatamodel */;
-			path = itunes_hw.xcdatamodeld;
+			currentVersion = 3A28DC572554E2E8006A84A3 /* DatabaseModel.xcdatamodel */;
+			path = DatabaseModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

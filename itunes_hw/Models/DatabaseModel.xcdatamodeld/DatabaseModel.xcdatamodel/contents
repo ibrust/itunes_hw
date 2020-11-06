@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="SingleSong" representedClassName="SingleSong" syncable="YES" codeGenerationType="category">
+        <attribute name="artistId" optional="YES" attributeType="String"/>
+        <attribute name="artistName" optional="YES" attributeType="String"/>
+        <attribute name="artistUrl" optional="YES" attributeType="String"/>
+        <attribute name="artworkUrl1100" optional="YES" attributeType="String"/>
+        <attribute name="contentAdvisoryRating" optional="YES" attributeType="String"/>
+        <attribute name="copyright" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="kind" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="releaseDate" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SongGenre" inverseName="associatedsong" inverseEntity="SongGenre"/>
+    </entity>
+    <entity name="SongGenre" representedClassName="SongGenre" syncable="YES" codeGenerationType="category">
+        <attribute name="genreId" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="associatedsong" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SingleSong" inverseName="genres" inverseEntity="SingleSong"/>
+    </entity>
+    <elements>
+        <element name="SingleSong" positionX="-63" positionY="-18" width="128" height="223"/>
+        <element name="SongGenre" positionX="105.78515625" positionY="168.0078125" width="128" height="103"/>
+    </elements>
+</model>
