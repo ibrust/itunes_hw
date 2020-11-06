@@ -7,6 +7,8 @@
 
 import UIKit
 
+let reuse_id = "custom_cell"
+
 class TableController: UITableViewController {
 
     override func viewDidLoad() {

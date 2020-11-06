@@ -13,15 +13,13 @@ class CustomCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
     @IBOutlet weak var image_outlet: UIImageView!
-    
     @IBOutlet weak var album_title_outlet: UILabel!
-    
     @IBOutlet weak var artist_name_outlet: UILabel!
     
-    
     @IBAction func star_button(_ sender: UIButton) {
+        
     }
-    
     
 }
