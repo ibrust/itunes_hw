@@ -27,26 +27,7 @@ extension CodingUserInfoKey {
 
 
 class SingleSong: NSManagedObject, Codable {
-    /*func make_song(info: Single_Song_Codable) -> SingleSong? {
-        let context = AppDelegate.persistentContainer.viewContext
-        let new_song = SingleSong(context: context)
-        new_song.artistName = info.artistName
-        new_song.artistId = info.artistId
-        new_song.id = info.id
-        new_song.releaseDate = info.releaseDate
-        new_song.name = info.name
-        new_song.kind = info.kind
-        new_song.copyright = info.copyright
-        new_song.contentAdvisoryRating = info.contentAdvisoryRating
-        new_song.artistUrl = info.artistUrl
-        new_song.artworkUrl1100 = info.artworkUrl1100
-        //new_song.genres = SongGenre.fetch_genre()
-        
-        return new_song
-    }*/
-    
 
-    
     required convenience init(from decoder: Decoder) throws {
         guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext!] as? NSManagedObjectContext
         else{
@@ -81,9 +62,9 @@ class SingleSong: NSManagedObject, Codable {
         try container.encode(kind, forKey: .kind)
         try container.encode(copyright, forKey: .copyright)
         try container.encode(contentAdvisoryRating, forKey: .contentAdvisoryRating)
-        try container.encode(artistName, forKey: .artistName)
-        try container.encode(artistName, forKey: .artistName)
-        try container.encode(artistName, forKey: .artistName)
+        try container.encode(artistUrl, forKey: .artistUrl)
+        try container.encode(artworkUrl1100, forKey: .artworkUrl1100)
+        try container.encode(genres as! Set<SongGenre>, forKey: .genres)
     }
     
     enum CodingKeys: CodingKey {
@@ -93,12 +74,7 @@ class SingleSong: NSManagedObject, Codable {
 }
 
 
-class SongGenre: NSManagedObject, Decodable {
-    /*func fetch_genre() -> SongGenre {
-        
-        
-        
-    }*/
+class SongGenre: NSManagedObject, Codable {
     
     required convenience init(from decoder: Decoder) throws {
         guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext!] as? NSManagedObjectContext
@@ -115,16 +91,40 @@ class SongGenre: NSManagedObject, Decodable {
         self.associatedsong = try container.decode(Set<SingleSong>.self, forKey: .associatedsong) as NSSet
     }
     
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(genreId, forKey: .genreId)
+        try container.encode(name, forKey: .name)
+        try container.encode(url, forKey: .url)
+        try container.encode(associatedsong as! Set<SingleSong>, forKey: .associatedsong)
+    }
+    
     enum CodingKeys: CodingKey {
-        case genreId, name, url, associatedSong
+        case genreId, name, url, associatedsong
     }
     
 }
 
 
 
-
-
+/*func make_song(info: Single_Song_Codable) -> SingleSong? {
+    let context = AppDelegate.persistentContainer.viewContext
+    let new_song = SingleSong(context: context)
+    new_song.artistName = info.artistName
+    new_song.artistId = info.artistId
+    new_song.id = info.id
+    new_song.releaseDate = info.releaseDate
+    new_song.name = info.name
+    new_song.kind = info.kind
+    new_song.copyright = info.copyright
+    new_song.contentAdvisoryRating = info.contentAdvisoryRating
+    new_song.artistUrl = info.artistUrl
+    new_song.artworkUrl1100 = info.artworkUrl1100
+    //new_song.genres = SongGenre.fetch_genre()
+    
+    return new_song
+}*/
 
 
 
