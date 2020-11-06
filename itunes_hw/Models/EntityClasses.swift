@@ -24,8 +24,6 @@ extension CodingUserInfoKey {
  */
 
 
-
-
 class SingleSong: NSManagedObject, Codable {
 
     required convenience init(from decoder: Decoder) throws {
@@ -33,9 +31,7 @@ class SingleSong: NSManagedObject, Codable {
         else{
             throw DecoderConfigurationError.missingManagedObjectContext
         }
-        
         self.init(context: context)
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.artistName = try container.decode(String.self, forKey: .artistName)
@@ -48,6 +44,8 @@ class SingleSong: NSManagedObject, Codable {
         self.contentAdvisoryRating = try container.decode(String.self, forKey: .contentAdvisoryRating)
         self.artistUrl = try container.decode(String.self, forKey: .artistUrl)
         self.artworkUrl1100 = try container.decode(String.self, forKey: .artworkUrl1100)
+        
+        // you might actually check whether the genre is in the database before decoding it... right?
         self.genres = try container.decode(Set<SongGenre>.self, forKey: .genres) as NSSet
     }
     
@@ -70,7 +68,6 @@ class SingleSong: NSManagedObject, Codable {
     enum CodingKeys: CodingKey {
         case artistName, artistId, id, releaseDate, name, kind, copyright, contentAdvisoryRating, artistUrl, artworkUrl1100, genres
     }
-    
 }
 
 
@@ -82,7 +79,6 @@ class SongGenre: NSManagedObject, Codable {
             throw DecoderConfigurationError.missingManagedObjectContext
         }
         self.init(context: context)
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.genreId = try container.decode(String.self, forKey: .genreId)
@@ -97,13 +93,14 @@ class SongGenre: NSManagedObject, Codable {
         try container.encode(genreId, forKey: .genreId)
         try container.encode(name, forKey: .name)
         try container.encode(url, forKey: .url)
+        
+        // maybe check whether the song is in the database before doing any encoding - although this should never fire, it's an optional and the json doesn't actually contain this information
         try container.encode(associatedsong as! Set<SingleSong>, forKey: .associatedsong)
     }
     
     enum CodingKeys: CodingKey {
         case genreId, name, url, associatedsong
     }
-    
 }
 
 
@@ -128,3 +125,25 @@ class SongGenre: NSManagedObject, Codable {
 
 
 
+/*
+struct Single_Song_Codable: Codable {
+    var artistName: String = ""
+    var id: String = ""
+    var releaseDate: String = ""
+    var name: String = ""
+    var kind: String = ""
+    var copyright: String = ""
+    var artistId: String = ""
+    var contentAdvisoryRating: String = ""
+    var artistUrl: String = ""
+    var artworkUrl1100: String = ""
+    var genres: [Song_Genre_Codable] = []
+    var url: String = ""
+}
+
+struct Song_Genre_Codable: Codable {
+    var genreId: String = ""
+    var name: String = ""
+    var url: String = ""
+}
+*/
