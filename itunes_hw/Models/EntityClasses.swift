@@ -112,7 +112,7 @@ class SongGenre: NSManagedObject, Decodable {
         self.genreId = try container.decode(String.self, forKey: .genreId)
         self.name = try container.decode(String.self, forKey: .name)
         self.url = try container.decode(String.self, forKey: .url)
-        self.associatedSong = try container.decode(Set<SingleSong>.self, forKey: .associatedSong) as NSSet
+        self.associatedsong = try container.decode(Set<SingleSong>.self, forKey: .associatedsong) as NSSet
     }
     
     enum CodingKeys: CodingKey {
