@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="150" id="nCJ-H0-WNY">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="150" id="nCJ-H0-WNY" customClass="CustomCell" customModule="itunes_hw" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nCJ-H0-WNY" id="nSH-P6-faS">
@@ -54,6 +54,9 @@
                                                                         <constraint firstAttribute="height" constant="30" id="Un6-2o-YaM"/>
                                                                     </constraints>
                                                                     <state key="normal" image="star" catalog="system"/>
+                                                                    <connections>
+                                                                        <action selector="star_button:" destination="nCJ-H0-WNY" eventType="touchUpInside" id="LIA-Gq-t8I"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -78,6 +81,11 @@
                                         <constraint firstItem="rml-jq-n1u" firstAttribute="top" secondItem="nSH-P6-faS" secondAttribute="top" id="yzC-8L-eNU"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="album_title_outlet" destination="Eoi-ni-4Pv" id="JgJ-J0-bTi"/>
+                                    <outlet property="artist_name_outlet" destination="oPr-X1-pYz" id="YV3-FZ-Hvw"/>
+                                    <outlet property="image_outlet" destination="ZPg-r5-wpG" id="IDy-e7-2tX"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
