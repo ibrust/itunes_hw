@@ -37,7 +37,10 @@ class RequestManager{
         // but lets say this gets called and does nothing...
         // didSet is not working for this data anymore, because it's overwritten by the next request from a cell...
         // normally didSet is supposed to detect any changes...
-        // 
+        // you need notifications
+        
+        
+        
         
         
         

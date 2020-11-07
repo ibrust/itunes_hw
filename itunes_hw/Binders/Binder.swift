@@ -5,7 +5,7 @@
 //  Created by Field Employee on 11/6/20.
 //
 
-import Foundation
+import UIKit
 
 
 
@@ -30,7 +30,29 @@ class Binder {
     
     func bind_cellupdatehandler(update_handler: @escaping (Int) -> ()){
         self.bound_cellupdatehandler = update_handler
+        
+        
+        
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
+            object: nil,
+            queue: nil) { (notification) in
+        
+            // so you probably want to loop through all the notification objects, whatever they are, and get the row... along with the changes. but for now let's just continue and test this, and see if it even does anything...
+            guard let user_info = notification.userInfo else {return}
+            
+            print("in observer, calling bound_cellupdatehandler(1) with notification: ", notification)
+            
+            /*if let inserts = user_info[NSInsertedObjectsKey] as? Set<NSManagedObject> where inserts.count > 0 {
+                
+            }*/
+        
+            //self.bound_cellupdatehandler?(1)
+        }
+        
     }
+    
+    // you want to add an observer to the binder... how?
     
     
 }
@@ -38,10 +60,10 @@ class Binder {
 
 extension Binder{
     func get_image(_ row: Int){
-        self.fetched_song = self.manager.fetch_song(row) 
+        
     }
     func get_song_data(_ row: Int){
-        
+        self.fetched_song = self.request_manager.fetch_song(row)
     }
 }
 
