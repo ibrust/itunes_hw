@@ -13,6 +13,7 @@ class Binder {
     
     var request_manager: RequestManager
     
+    var fetched_song: SingleSong? = nil
     
     
     // this is called by an observer of the model when the model updates
@@ -37,7 +38,7 @@ class Binder {
 
 extension Binder{
     func get_image(_ row: Int){
-        
+        self.fetched_song = self.manager.fetch_song(row) 
     }
     func get_song_data(_ row: Int){
         
