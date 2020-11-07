@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="SingleSong" representedClassName="SingleSong" syncable="YES" codeGenerationType="category">
+    <entity name="SingleSong" representedClassName=".SingleSong" syncable="YES" codeGenerationType="category">
         <attribute name="artistId" optional="YES" attributeType="String"/>
         <attribute name="artistName" optional="YES" attributeType="String"/>
         <attribute name="artistUrl" optional="YES" attributeType="String"/>
@@ -14,7 +14,7 @@
         <attribute name="url" optional="YES" attributeType="String"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SongGenre" inverseName="associatedsong" inverseEntity="SongGenre"/>
     </entity>
-    <entity name="SongGenre" representedClassName="SongGenre" syncable="YES" codeGenerationType="category">
+    <entity name="SongGenre" representedClassName=".SongGenre" syncable="YES" codeGenerationType="category">
         <attribute name="genreId" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>

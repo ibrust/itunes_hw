@@ -24,7 +24,10 @@ class Binder {
     var bound_cellupdatehandler: ((Int) -> ())? = nil
     
     init(request_manager: RequestManager = RequestManager()){
+        print("in request manager...")
         self.request_manager = request_manager
+        let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/2/explicit.json"
+        self.request_manager.fetch_json_list(url, completion: {print("complete");return})
     }
     
     
@@ -42,6 +45,7 @@ class Binder {
             guard let user_info = notification.userInfo else {return}
             
             print("in observer, calling bound_cellupdatehandler(1) with notification: ", notification)
+            print("user info: ", user_info)
             
             /*if let inserts = user_info[NSInsertedObjectsKey] as? Set<NSManagedObject> where inserts.count > 0 {
                 
