@@ -13,53 +13,60 @@ class RequestManager{
     
     var session: URLSession
     var decoder: JSONDecoder
+    var app_delegate = AppDelegate()
+    var operations_queue = OperationQueue()
+    var fetch_operation: Fetch_List_Operation? = nil
     
     init(){
         decoder = JSONDecoder()
         decoder.userInfo[CodingUserInfoKey.managedObjectContext!] = AppDelegate.persistentContainer.viewContext
         self.session = URLSession.shared
+        self.fetch_operation = Fetch_List_Operation(self)
+    }
+    
+    // you could use an operation to fetch the image...?
+    // I don't think there's a downside to fetching the image from the database multiple times, but you are going to have to request this image somewhere.
+    // that might benefit from an operation
+    func fetch_image(){
+        
+    }
+    
+    func get_image(){
+        
     }
         
-    func fetch_song(_ row: Int) -> SingleSong {
+    // should you use operations to fetch the song...?
+    // there's no real downside to repeatedly fetching the song, assuming it's there.
+    // what you really need is a way of knowing if the database is full or not.
+    
+    // cellforrowat is calling a function, but your model is automatically updating, correct?
+    // so I believe this function actually triggers the handler.
+    // the return of this function is what is detected by didset...
+    func get_song_data(_ row: Int) -> SingleSong {
+        let context = AppDelegate.persistentContainer.viewContext
         
-        // here you need that logic to make a fetch from the database,
-        // then optionally fetch the json... etc.
-        // at some point you're gona have to fetch the image also ...
-        // you could use an operation to fetch the image...?
-        // the json you're just fetching all at once, so...
+        let request: NSFetchRequest<SingleSong> = SingleSong.fetchRequest()
+        request.predicate = NSPredicate(format: "unique_id = %@", String(row))
         
-        // though I kind of just want to fetch the json first...
-        // but remember the application runs repeatedly
-        
-        
-        // shouldn't something be called at the very beginning of the application?
-        // should it be called in here....?
-        // this is just gona be a database call...?
-        // how would you synchronize it with the core data call then...?
-        // the automatic updating.......? how does that work exactly?
-        // cellforrowat is calling a function, but your model is automatically updating, correct?
-        // so how the hell is that working?
-        // so I believe this function actually triggers the handler.
-        // the return of this function is what is detected by didset...
-        
-        // you COULD put the overall network call in an operation, right?
-        // but lets say this gets called and does nothing...
-        // didSet is not working for this data anymore, because it's overwritten by the next request from a cell...
-        // normally didSet is supposed to detect any changes...
-        // you need notifications
-        
-        
-        
-        // honestly I don't even know if I need this, if my notification observer is working it should just fire without me having to call fetch data for the individual songs?
-        // after all, I'm only fetching the json one time...
-        // let me just try getting the json and see if that even works...
-        
-        
-        // well... this will be needed for the detail, though. right?
-        // you'll have to fetch specific data for the detail...
-        
+        do{
+            let results = try context.fetch(request)
+            print("FETCHED RESULTS: ", results)
+            if results == [] {
+                print("it's []")
+                // maybe do a fetch json operation here?
+            }
+            if let single_song = results.first {
+                return single_song
+            }
+        } catch {
+            print("ERROR FETCHING RESULTS", error)
+        }
         
         return SingleSong()
+    }
+    
+    func delete_song_data(_ row: Int){
+        
     }
     
     
@@ -67,46 +74,53 @@ class RequestManager{
     // but lets say the data is already in the database.
     // dont you need to return the data then? you can't rely on notifications if nothing changes...
     // you could just do nothing if it's already there, and manage that elsewhere.
-    // just simply have this function fetch the json if it's needed.
-    // but you must rely on notifications for this to work...
-    // do you need a custom notification, then?
-    // probably... that probably will work better, ultimately.
-    // and you wouldn't make this an operation because it's only executed once in the code and you can control that very easily
-    func fetch_json_list(_ url: String, completion: @escaping () -> () ){
-        guard let url_obj = URL(string: url) else {print("url issue");return}
-        session.dataTask(with: url_obj) { (data, response, error) in
-            if let _ = error{print("ERROR: ", error);return}
-            guard let data = data else{print("NO DATA!");return}
-            do {
-                let unknown_type = try self.decoder.decode(JSON_struct.self, from: data)
-                
-                } catch let json_error {print("error unserializing json in fetch_json_list: ", json_error)}
-            
-        }.resume()
-    }
-    /*
-     func fetch_list_of_pokemon(_ url: String, offset page_offset_copy: Int, completion: @escaping () -> () ){
-         guard let url_obj = URL(string:url) else{return}
-         session.dataTask(with: url_obj) { (data, response, error) in
-         if let _ = error{return}
-         guard let data = data else{return}
-         do {
-             let json_response = try JSONDecoder().decode(Pokemon_Previous_Next_And_Results.self, from: data)
-             
-             var count = 0
-             for index in page_offset_copy..<(page_offset_copy + page_size) {
-                 if index < max_pokemon {
-                     pokemon_previous_next_and_results.results[index] = json_response.results[count]
-                     count += 1
-                 }
-             }
-             pokemon_previous_next_and_results.previous = json_response.previous
-             pokemon_previous_next_and_results.next = json_response.next
-             completion()
-         } catch let json_error {print("error unserializing json in fetch_list_of_pokemon: ", json_error)}
-         return
-     }.resume()
- }*/
+
+    // do you need a custom notification for the database call, in the event the json is already there, then? Because the data isn't always gona change.
+
     
     
 }
+
+class Fetch_List_Operation: Operation {
+    let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json"
+    
+    var request_manager: RequestManager
+    
+    init(_ request_manager: RequestManager){
+        self.request_manager = request_manager
+    }
+    
+    override func main(){
+        fetch_json_list() { [weak self] in ()
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+
+                /*
+                self.table_controller_reference?.tableView.reloadData()
+                for index in 0..<100) {
+                    if index < max_pokemon {
+                        fetch_pokemon_operations[index] = Fetch_Pokemon_Operation(index, self.table_controller_reference)
+                        operations_queue.addOperation(fetch_pokemon_operations[index]!)
+                    }
+                }*/
+            }
+        }
+    }
+    
+
+    func fetch_json_list(completion: @escaping () -> () ){
+        guard let url_obj = URL(string: url) else {print("url issue");return}
+        self.request_manager.session.dataTask(with: url_obj) { (data, response, error) in
+            if let _ = error {print(error);return}
+            guard let data = data else {return}
+            do {
+                let json_struct = try self.request_manager.decoder.decode(JSON_struct.self, from: data)
+                                
+                } catch let json_error {print("error decoding json in fetch_json_list: ", json_error)}
+            self.request_manager.app_delegate.saveContext()
+            
+        }.resume()
+    }
+    
+}
+

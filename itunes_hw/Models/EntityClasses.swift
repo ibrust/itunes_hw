@@ -17,13 +17,21 @@ extension CodingUserInfoKey {
 }
 
 class SingleSong: NSManagedObject, Codable {
+    
+    static var unique_id = 0
 
     required convenience init(from decoder: Decoder) throws {
         guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext!] as? NSManagedObjectContext
         else{
             throw DecoderConfigurationError.missingManagedObjectContext
         }
+        
+        // got a 'bad access' error here, looked like a multithreaded issue...
+        // maybe try creating the json on the main thread or something...
+        // if you can do that, maybe use the app delegate context? 
         self.init(context: context)
+        
+        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.artistName = try container.decode(String.self, forKey: .artistName)
@@ -33,7 +41,6 @@ class SingleSong: NSManagedObject, Codable {
         self.name = try container.decode(String.self, forKey: .name)
         self.kind = try container.decode(String.self, forKey: .kind)
         self.copyright = try container.decode(String.self, forKey: .copyright)
-        self.contentAdvisoryRating = try container.decode(String.self, forKey: .contentAdvisoryRating)
         self.artistUrl = try container.decode(String.self, forKey: .artistUrl)
         self.artworkUrl100 = try container.decode(String.self, forKey: .artworkUrl100)
         
@@ -51,15 +58,21 @@ class SingleSong: NSManagedObject, Codable {
         try container.encode(name, forKey: .name)
         try container.encode(kind, forKey: .kind)
         try container.encode(copyright, forKey: .copyright)
-        try container.encode(contentAdvisoryRating, forKey: .contentAdvisoryRating)
         try container.encode(artistUrl, forKey: .artistUrl)
         try container.encode(artworkUrl100, forKey: .artworkUrl100)
         try container.encode(genres as! Set<SongGenre>, forKey: .genres)
     }
     
     enum CodingKeys: CodingKey {
-        case artistName, artistId, id, releaseDate, name, kind, copyright, contentAdvisoryRating, artistUrl, artworkUrl100, genres
+        case artistName, artistId, id, releaseDate, name, kind, copyright, artistUrl, artworkUrl100, genres
     }
+    
+    override func awakeFromInsert(){
+        super.awakeFromInsert()
+        unique_id = String(SingleSong.unique_id)
+        SingleSong.unique_id += 1
+    }
+    
 }
 
 
@@ -76,7 +89,7 @@ class SongGenre: NSManagedObject, Codable {
         self.genreId = try container.decode(String.self, forKey: .genreId)
         self.name = try container.decode(String.self, forKey: .name)
         self.url = try container.decode(String.self, forKey: .url)
-        //self.associatedsong = try container.decode(Set<SingleSong>.self, forKey: .associatedsong) as NSSet
+
     }
     
     func encode(to encoder: Encoder) throws {
@@ -85,16 +98,13 @@ class SongGenre: NSManagedObject, Codable {
         try container.encode(genreId, forKey: .genreId)
         try container.encode(name, forKey: .name)
         try container.encode(url, forKey: .url)
-        
-        // maybe check whether the song is in the database before doing any encoding - although this should never fire, it's an optional and the json doesn't actually contain this information
-        //try container.encode(associatedsong as! Set<SingleSong>, forKey: .associatedsong)
+
     }
     
     enum CodingKeys: CodingKey {
-        case genreId, name, url //, associatedsong
+        case genreId, name, url
     }
 }
-
 
 
 struct JSON_struct: Codable {

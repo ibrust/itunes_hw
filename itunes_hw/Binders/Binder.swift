@@ -13,7 +13,7 @@ class Binder {
     
     var request_manager: RequestManager
     
-    var fetched_song: SingleSong? = nil
+    var gotten_song: SingleSong? = nil
     
     
     // this is called by an observer of the model when the model updates
@@ -24,10 +24,9 @@ class Binder {
     var bound_cellupdatehandler: ((Int) -> ())? = nil
     
     init(request_manager: RequestManager = RequestManager()){
-        print("in request manager...")
         self.request_manager = request_manager
-        let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/2/explicit.json"
-        self.request_manager.fetch_json_list(url, completion: {print("complete");return})
+        /*let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json"
+        self.request_manager.fetch_json_list(url, completion: {print("complete");return})*/
     }
     
     
@@ -35,7 +34,7 @@ class Binder {
         self.bound_cellupdatehandler = update_handler
         
         
-        
+        /*
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
             object: nil,
@@ -44,15 +43,16 @@ class Binder {
             // so you probably want to loop through all the notification objects, whatever they are, and get the row... along with the changes. but for now let's just continue and test this, and see if it even does anything...
             guard let user_info = notification.userInfo else {return}
             
+            /*
             print("in observer, calling bound_cellupdatehandler(1) with notification: ", notification)
-            print("user info: ", user_info)
+            print("user info: ", user_info)*/
             
             /*if let inserts = user_info[NSInsertedObjectsKey] as? Set<NSManagedObject> where inserts.count > 0 {
                 
             }*/
         
             //self.bound_cellupdatehandler?(1)
-        }
+        }*/
         
     }
     
@@ -67,7 +67,7 @@ extension Binder{
         
     }
     func get_song_data(_ row: Int){
-        self.fetched_song = self.request_manager.fetch_song(row)
+        self.gotten_song = self.request_manager.get_song_data(row)
     }
 }
 

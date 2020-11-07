@@ -37,7 +37,7 @@ class TableController: UITableViewController {
         self.binder.bind_cellupdatehandler { [weak self] row in
             DispatchQueue.main.async {
                 guard let self = self else{return}
-                
+                                
                 let index_path = IndexPath(row: row, section: 0)
                 let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
                 let song_data = self.binder.get_song_data(row)
@@ -79,7 +79,7 @@ extension TableController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuse_id, for: indexPath)
 
-        // Configure the cell...
+        self.get_song_data(indexPath.row)
 
         return cell
     }

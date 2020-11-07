@@ -5,12 +5,12 @@
         <attribute name="artistName" optional="YES" attributeType="String"/>
         <attribute name="artistUrl" optional="YES" attributeType="String"/>
         <attribute name="artworkUrl100" optional="YES" attributeType="String"/>
-        <attribute name="contentAdvisoryRating" optional="YES" attributeType="String"/>
         <attribute name="copyright" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="kind" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="releaseDate" optional="YES" attributeType="String"/>
+        <attribute name="unique_id" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SongGenre" inverseName="associatedsong" inverseEntity="SongGenre"/>
     </entity>
