@@ -84,6 +84,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
+    
+    static var updateContext: NSManagedObjectContext {
+        let _updateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        _updateContext.parent = AppDelegate.viewContext
+        return _updateContext
+    }
 
 }
 

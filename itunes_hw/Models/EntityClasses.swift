@@ -46,6 +46,16 @@ class SingleSong: NSManagedObject, Codable {
         
         // you might actually check whether the genre is in the database before decoding it... right?
         self.genres = try container.decode(Set<SongGenre>.self, forKey: .genres) as NSSet
+        
+        do {
+            try context.save()
+            DispatchQueue.main.async{
+                try? AppDelegate.viewContext.save()
+            }
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
     }
     
     func encode(to encoder: Encoder) throws {
@@ -69,7 +79,10 @@ class SingleSong: NSManagedObject, Codable {
     
     override func awakeFromInsert(){
         super.awakeFromInsert()
-        unique_id = String(SingleSong.unique_id)
+        
+        if Int(SingleSong.unique_id) % 2 == 0 {
+            unique_id = String(SingleSong.unique_id / 2)
+        }
         SingleSong.unique_id += 1
     }
     
@@ -89,6 +102,16 @@ class SongGenre: NSManagedObject, Codable {
         self.genreId = try container.decode(String.self, forKey: .genreId)
         self.name = try container.decode(String.self, forKey: .name)
         self.url = try container.decode(String.self, forKey: .url)
+        
+        do {
+            try context.save()
+            DispatchQueue.main.async{
+                try? AppDelegate.viewContext.save()
+            }
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
 
     }
     

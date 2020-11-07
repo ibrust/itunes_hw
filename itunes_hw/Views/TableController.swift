@@ -44,9 +44,10 @@ class TableController: UITableViewController {
                 //cell?.album_title_outlet = song_data.albumTitle
             }
         }
-        
     }
 
+    
+    
     /*
     // MARK: - Navigation
 

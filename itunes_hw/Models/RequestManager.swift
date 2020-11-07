@@ -14,12 +14,12 @@ class RequestManager{
     var session: URLSession
     var decoder: JSONDecoder
     var app_delegate = AppDelegate()
-    var operations_queue = OperationQueue()
-    var fetch_operation: Fetch_List_Operation? = nil
+    fileprivate var operations_queue = OperationQueue()
+    fileprivate var fetch_operation: Fetch_List_Operation? = nil
     
     init(){
         decoder = JSONDecoder()
-        decoder.userInfo[CodingUserInfoKey.managedObjectContext!] = AppDelegate.persistentContainer.viewContext
+        decoder.userInfo[CodingUserInfoKey.managedObjectContext!] = AppDelegate.updateContext
         self.session = URLSession.shared
         self.fetch_operation = Fetch_List_Operation(self)
     }
@@ -44,25 +44,36 @@ class RequestManager{
     // the return of this function is what is detected by didset...
     func get_song_data(_ row: Int) -> SingleSong {
         let context = AppDelegate.persistentContainer.viewContext
-        
+        var single_song = SingleSong()
         let request: NSFetchRequest<SingleSong> = SingleSong.fetchRequest()
         request.predicate = NSPredicate(format: "unique_id = %@", String(row))
-        
+
         do{
             let results = try context.fetch(request)
-            print("FETCHED RESULTS: ", results)
             if results == [] {
-                print("it's []")
+                print("it's [] for row: ", row, results)
                 // maybe do a fetch json operation here?
+                
+                if self.fetch_operation?.isFinished == false && self.fetch_operation?.isExecuting == false{
+                    print("fetching json operation at row: ", row)
+                    self.operations_queue.addOperation(self.fetch_operation!)
+                }
+                
+            } else {
+                print("it wasn't [] for row: ", row)
+                for x in results{
+                    print("X: ", x.unique_id)
+                }
+                print("it wasn't [] for row: ", row, results)
             }
-            if let single_song = results.first {
-                return single_song
+            if let _ = results.first {
+                single_song = results.first!
             }
         } catch {
             print("ERROR FETCHING RESULTS", error)
         }
         
-        return SingleSong()
+        return single_song
     }
     
     func delete_song_data(_ row: Int){
@@ -76,12 +87,10 @@ class RequestManager{
     // you could just do nothing if it's already there, and manage that elsewhere.
 
     // do you need a custom notification for the database call, in the event the json is already there, then? Because the data isn't always gona change.
-
-    
     
 }
 
-class Fetch_List_Operation: Operation {
+fileprivate class Fetch_List_Operation: Operation {
     let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json"
     
     var request_manager: RequestManager
@@ -95,6 +104,15 @@ class Fetch_List_Operation: Operation {
             guard let self = self else {return}
             DispatchQueue.main.async {
 
+                // here the data was returned to the table after the fetch
+                // you might calla  bunch of database getter functions here ...
+                // depends how you want to do it
+                // you might only call the initial ones for the first couple of cells, too...
+                // or you could call refreshdata and cause the cells / prefetch
+                // functions to do it.. probably a better design actually
+                // but you need some sort of table controller reference for that...
+                // gona have to consider how to do that
+                
                 /*
                 self.table_controller_reference?.tableView.reloadData()
                 for index in 0..<100) {
@@ -102,11 +120,10 @@ class Fetch_List_Operation: Operation {
                         fetch_pokemon_operations[index] = Fetch_Pokemon_Operation(index, self.table_controller_reference)
                         operations_queue.addOperation(fetch_pokemon_operations[index]!)
                     }
-                }*/
+                }*/ 
             }
         }
     }
-    
 
     func fetch_json_list(completion: @escaping () -> () ){
         guard let url_obj = URL(string: url) else {print("url issue");return}
@@ -115,8 +132,9 @@ class Fetch_List_Operation: Operation {
             guard let data = data else {return}
             do {
                 let json_struct = try self.request_manager.decoder.decode(JSON_struct.self, from: data)
-                                
+                    print("FETCHING THE JSON IN OPERATION")
                 } catch let json_error {print("error decoding json in fetch_json_list: ", json_error)}
+            
             self.request_manager.app_delegate.saveContext()
             
         }.resume()
