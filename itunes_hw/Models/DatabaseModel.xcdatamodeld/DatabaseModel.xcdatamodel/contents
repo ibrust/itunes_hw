@@ -4,7 +4,7 @@
         <attribute name="artistId" optional="YES" attributeType="String"/>
         <attribute name="artistName" optional="YES" attributeType="String"/>
         <attribute name="artistUrl" optional="YES" attributeType="String"/>
-        <attribute name="artworkUrl1100" optional="YES" attributeType="String"/>
+        <attribute name="artworkUrl100" optional="YES" attributeType="String"/>
         <attribute name="contentAdvisoryRating" optional="YES" attributeType="String"/>
         <attribute name="copyright" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>

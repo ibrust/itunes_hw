@@ -73,17 +73,14 @@ class RequestManager{
     // probably... that probably will work better, ultimately.
     // and you wouldn't make this an operation because it's only executed once in the code and you can control that very easily
     func fetch_json_list(_ url: String, completion: @escaping () -> () ){
-        print("in json fetch...")
         guard let url_obj = URL(string: url) else {print("url issue");return}
         session.dataTask(with: url_obj) { (data, response, error) in
             if let _ = error{print("ERROR: ", error);return}
             guard let data = data else{print("NO DATA!");return}
             do {
-                let unknown_type = try self.decoder.decode(SingleSong.self, from: data)
+                let unknown_type = try self.decoder.decode(JSON_struct.self, from: data)
                 
-                
-                
-            } catch let json_error {print("error unserializing json in fetch_json_list: ", json_error)}
+                } catch let json_error {print("error unserializing json in fetch_json_list: ", json_error)}
             
         }.resume()
     }
