@@ -24,14 +24,19 @@ class Binder {
             if newValue != nil{
                 guard let temp = newValue as? SingleSong? else {return}
                 print("HERE", temp)
-                guard let temp2 = temp?.unique_id else{return}
+                guard let temp2 = temp?.unique_id else {return}
                 print("AND HERE")
-                guard let number = Int(temp2) else{return}
+                guard let number = Int(temp2) else {return}
                 print("AAAND HERE")
-                bound_cellupdatehandler!(number)
+                bound_cellupdatehandler?(number)
             } else {
+                
+                // probably wont even need this 
+                
+                
+                
                 if json_request_complete == false {
-                    bound_tablerefreshhandler?()
+                    print("it showed up")
                     json_request_complete == true
                 }
             }
@@ -44,14 +49,14 @@ class Binder {
     // the bound function will have access to the tableviews data - and thus the cell data through the integer, and also the model data through the intent functions (these are called within the closure)
     // note that this accesses the cells data and sets them to the intent functions of the binder (which simply return the data). this is all after the binder has been alerted of changes via the observer (which calls this)
     var bound_cellupdatehandler: ((Int) -> ())? = nil
-    var bound_tablerefreshhandler: (() -> ())? = nil
+    var bound_tablerefreshhandler: ((Int) -> ())? = nil
     var json_request_complete = false
     
     init(){
         self.request_manager = RequestManager()
     }
     
-    func bind_tablerefreshhandler(refresh_handler: @escaping () -> ()){
+    func bind_tablerefreshhandler(refresh_handler: @escaping (Int) -> ()){
         self.bound_tablerefreshhandler = refresh_handler
     }
     

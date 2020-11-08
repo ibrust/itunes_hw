@@ -15,6 +15,8 @@ class TableController: UITableViewController {
     
     var current_image: UIImage? = nil
     
+    private var observer: NSObjectProtocol?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,20 +42,71 @@ class TableController: UITableViewController {
                 guard let self = self else{return}
                                 
                 let index_path = IndexPath(row: row, section: 0)
+                
+                
                 let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
+                
                 let song_data = self.binder.return_song()
+                print("SONG DATA IS: ", row, song_data)
                 cell?.artist_name_outlet.text = song_data?.artistName
                 cell?.album_title_outlet.text = song_data?.unique_id
+                                
+                /*let index_path_array = [index_path]
+                // creates a cycle...
+                // how to solve this?
+                self.tableView.reloadRows(at: index_path_array, with: .none)*/
+                
             }
         }
-        self.binder.bind_tablerefreshhandler(){ [weak self] in
+        self.binder.bind_tablerefreshhandler(){ [weak self] row in
             DispatchQueue.main.async {
                 guard let self = self else{return}
                 
-                self.tableView.reloadData()
+                //self.tableView.reloadData()
+                self.binder.get_song_data(row)
             }
         }
+        
+        
+        observer = NotificationCenter.default.addObserver(
+            forName: .List_Fetch_Complete,
+            object: nil,
+            queue: OperationQueue.main) { _ in
+                print("OBSERVED SOMETHING")
+            
+                // maybe I should fetch the data in here...?
+                // I still don't have access to the indices...
+                // Why isn't the JSON in the database at this point, anyway? I thought it should be...? 
+            
+                // it looks like the single mutating cat is getting all the data...
+                // why?
+                // you're going back through cellforrowat ...
+                //
+                let visible_cells = self.tableView.visibleCells
+            
+                print("VISIBLE CELLS: ", visible_cells)
+            
+                self.tableView.reloadData()
+        }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        if let observer = self.observer {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+    
+    
+    // so what if you just refreshed the cells onscreen somehow..
+    // instead of calling the fetch from cellforrowat, call it when they're first onscreen... somehow
+    // you need to just do the UI updates in cellforrowat
+    // in the handler... the bound handler... just do reload. there won't be a cycle
+    // if you move the initial request out of cellforrowat
+    // but how do you get the song data into the cell...????? the cellforrowat
+    // and I don't think the mutating cat problem has been solved either....
+    // why not just do that first? just to fix any potential source of error ...?
+    // well the data is actually showing up in the handler...
 
     
     
@@ -87,11 +140,12 @@ extension TableController {
 extension TableController{
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuse_id, for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuse_id, for: indexPath) as? CustomCell
+        print("IN CELL FOR ROW AT")
+        
         self.get_song_data(indexPath.row)
-
-        return cell
+        
+        return cell ?? CustomCell()
     }
     
     

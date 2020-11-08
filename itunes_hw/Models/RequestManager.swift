@@ -51,7 +51,7 @@ class RequestManager{
         do{
             let results = try context.fetch(request)
             if results == [] {
-                //print("it's [] for row: ", row, results)
+                // print("it's [] for row: ", row, results)
                 
                 // there was some sort of intermittent bug with this ...
                 // not sure what it is. could check that the row is 0...?
@@ -113,6 +113,21 @@ fileprivate class Fetch_List_Operation: Operation {
                 // but you need some sort of table controller reference for that...
                 // gona have to consider how to do that
                 
+                
+                
+                // I believe this is where you are going to do the notification...
+                
+                // try actually refetching the data first? but isn't cellforrowat supposed to do that?
+                // looks like they both need to do it ...
+                // but this doesn't even have access to the indices...
+                //
+                
+                
+                
+                NotificationCenter.default.post(name: .List_Fetch_Complete, object: self)
+                
+                
+                
                 /*
                 self.table_controller_reference?.tableView.reloadData()
                 for index in 0..<100) {
@@ -120,7 +135,8 @@ fileprivate class Fetch_List_Operation: Operation {
                         fetch_pokemon_operations[index] = Fetch_Pokemon_Operation(index, self.table_controller_reference)
                         operations_queue.addOperation(fetch_pokemon_operations[index]!)
                     }
-                }*/ 
+                }
+                */
             }
         }
     }
@@ -132,13 +148,24 @@ fileprivate class Fetch_List_Operation: Operation {
             guard let data = data else {return}
             do {
                 let json_struct = try self.request_manager.decoder.decode(JSON_struct.self, from: data)
-                    print("FETCHING THE JSON IN OPERATION")
-                } catch let json_error {print("error decoding json in fetch_json_list: ", json_error)}
+                print("FETCHING THE JSON IN OPERATION")
+                completion()
+            }
+            catch let json_error {print("error decoding json in fetch_json_list: ", json_error)}
             
-            self.request_manager.app_delegate.saveContext()
+            
+            
+            // don't think I really need this... try deleting it later
+            //self.request_manager.app_delegate.saveContext()
+            
+
             
         }.resume()
     }
     
+}
+
+extension Notification.Name {
+    static let List_Fetch_Complete = Notification.Name("List_Fetch_Complete")
 }
 
