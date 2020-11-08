@@ -51,7 +51,7 @@ class RequestManager{
         do{
             let results = try context.fetch(request)
             if results == [] {
-                // print("it's [] for row: ", row, results)
+                print("it's [] for row: ", row)
                 
                 // there was some sort of intermittent bug with this ...
                 // not sure what it is. could check that the row is 0...?
@@ -62,8 +62,8 @@ class RequestManager{
                 }
                 
             } else {
-                //print("it wasn't [] for row: ", row, results)
-                //print("with: ", results.first?.artistName)
+                print("it wasn't [] for row: ", row)
+                print("with: ", results.first?.artistName)
                 if let _ = results.first {
                     single_song = results.first!
                     return single_song

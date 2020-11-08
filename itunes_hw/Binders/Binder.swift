@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import CoreData
 
 
 class Binder {
@@ -23,22 +23,11 @@ class Binder {
         willSet {
             if newValue != nil{
                 guard let temp = newValue as? SingleSong? else {return}
-                print("HERE", temp)
+                //print("HERE", temp)
                 guard let temp2 = temp?.unique_id else {return}
-                print("AND HERE")
+                print("WILLSET")
                 guard let number = Int(temp2) else {return}
-                print("AAAND HERE")
                 bound_cellupdatehandler?(number)
-            } else {
-                
-                // probably wont even need this 
-                
-                
-                
-                if json_request_complete == false {
-                    print("it showed up")
-                    json_request_complete == true
-                }
             }
         }
     }
@@ -49,46 +38,14 @@ class Binder {
     // the bound function will have access to the tableviews data - and thus the cell data through the integer, and also the model data through the intent functions (these are called within the closure)
     // note that this accesses the cells data and sets them to the intent functions of the binder (which simply return the data). this is all after the binder has been alerted of changes via the observer (which calls this)
     var bound_cellupdatehandler: ((Int) -> ())? = nil
-    var bound_tablerefreshhandler: ((Int) -> ())? = nil
-    var json_request_complete = false
     
     init(){
         self.request_manager = RequestManager()
     }
     
-    func bind_tablerefreshhandler(refresh_handler: @escaping (Int) -> ()){
-        self.bound_tablerefreshhandler = refresh_handler
-    }
-    
-    
     func bind_cellupdatehandler(update_handler: @escaping (Int) -> ()){
         self.bound_cellupdatehandler = update_handler
-        
-        
-        /*
-        NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
-            object: nil,
-            queue: nil) { (notification) in
-        
-            // so you probably want to loop through all the notification objects, whatever they are, and get the row... along with the changes. but for now let's just continue and test this, and see if it even does anything...
-            guard let user_info = notification.userInfo else {return}
-            
-            /*
-            print("in observer, calling bound_cellupdatehandler(1) with notification: ", notification)
-            print("user info: ", user_info)*/
-            
-            /*if let inserts = user_info[NSInsertedObjectsKey] as? Set<NSManagedObject> where inserts.count > 0 {
-                
-            }*/
-        
-            //self.bound_cellupdatehandler?(1)
-        }*/
-        
     }
-    
-    // you want to add an observer to the binder... how?
-    
     
 }
 

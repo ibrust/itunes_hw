@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 let reuse_id = "custom_cell"
 
@@ -43,13 +44,13 @@ class TableController: UITableViewController {
                                 
                 let index_path = IndexPath(row: row, section: 0)
                 
-                
-                let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
-                
                 let song_data = self.binder.return_song()
-                print("SONG DATA IS: ", row, song_data)
-                cell?.artist_name_outlet.text = song_data?.artistName
-                cell?.album_title_outlet.text = song_data?.unique_id
+                
+                //let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
+                
+                //print("SONG DATA IS: ", row, song_data)
+                //cell?.artist_name_outlet.text = song_data?.artistName
+                //cell?.album_title_outlet.text = song_data?.unique_id
                                 
                 /*let index_path_array = [index_path]
                 // creates a cycle...
@@ -58,36 +59,74 @@ class TableController: UITableViewController {
                 
             }
         }
-        self.binder.bind_tablerefreshhandler(){ [weak self] row in
-            DispatchQueue.main.async {
-                guard let self = self else{return}
-                
-                //self.tableView.reloadData()
-                self.binder.get_song_data(row)
-            }
-        }
+        
         
         
         observer = NotificationCenter.default.addObserver(
             forName: .List_Fetch_Complete,
             object: nil,
             queue: OperationQueue.main) { _ in
-                print("OBSERVED SOMETHING")
             
-                // maybe I should fetch the data in here...?
-                // I still don't have access to the indices...
-                // Why isn't the JSON in the database at this point, anyway? I thought it should be...? 
+            print("OBSERVED SOMETHING")
+        
+            // maybe I should fetch the data in here...?
+            // I still don't have access to the indices...
+            // Why isn't the JSON in the database at this point, anyway? I thought it should be...?
+        
+            // it looks like the single mutating cat is getting all the data...
+            // why?
+            // you're going back through cellforrowat ...
+            //
+            let visible_cells = self.tableView.visibleCells
+        
+            let index_paths = self.tableView.indexPathsForVisibleRows
+        
+            print("VISIBLE CELLS: ", visible_cells)
+        
+            for index_path in index_paths!{
+                self.tableView.reloadRows(at: [index_path], with: .none)
+            }
             
-                // it looks like the single mutating cat is getting all the data...
-                // why?
-                // you're going back through cellforrowat ...
-                //
-                let visible_cells = self.tableView.visibleCells
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
+                object: nil,
+                queue: nil) { (notification) in
+                
+                guard let user_info = notification.userInfo else {return}
+                
+                /*
+                print("in observer, calling bound_cellupdatehandler(1) with notification: ", notification)
+                print("user info: ", user_info)*/
+                
+                if let inserts = user_info[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+                    print("INSERTS: ", inserts)
+                    
+                    for inserted_entity in inserts {
+                        print("IN INSERT...")
+                        if let bound_entity = inserted_entity as? SingleSong {
+                            print("INSERTED SONG: ", bound_entity)
+                        }
+                        
+                        //let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
+                        
+                        //print("SONG DATA IS: ", row, song_data)
+                        //cell?.artist_name_outlet.text = song_data?.artistName
+                        //cell?.album_title_outlet.text = song_data?.unique_id
+                    }
+                    
+                    
+                    
+                }
+            }
             
-                print("VISIBLE CELLS: ", visible_cells)
             
-                self.tableView.reloadData()
         }
+        
+        // try to initially refresh every one of these cells...?
+        // but how do you ever refresh cells then?
+        // what triggers the refresh?
+        let visible_cells = self.tableView.visibleCells
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
