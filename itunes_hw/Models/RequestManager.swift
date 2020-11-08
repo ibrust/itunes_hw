@@ -77,10 +77,12 @@ fileprivate class Fetch_List_Operation: Operation {
     }
 
     func fetch_json_list(){
-        guard let url_obj = URL(string: url) else {print("url issue");return}
+        guard let url_obj = URL(string: url) else {print("url error in fetch_json_list");return}
+        
         self.request_manager.session.dataTask(with: url_obj) { (data, response, error) in
-            if let _ = error {print(error);return}
+            if let _ = error {print("fetching error in fetch_json_list: ", error);return}
             guard let data = data else {return}
+            
             do {
                 let json_struct = try self.request_manager.decoder.decode(JSON_struct.self, from: data)
             }

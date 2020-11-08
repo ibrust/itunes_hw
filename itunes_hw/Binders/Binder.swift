@@ -8,9 +8,7 @@
 import UIKit
 import CoreData
 
-
 class Binder {
-    
     var request_manager: RequestManager? = nil
     var songs_array = [SingleSong?](repeating: nil, count: total_rows)
     var bound_cellupdatehandler: ((Int) -> ())? = nil
