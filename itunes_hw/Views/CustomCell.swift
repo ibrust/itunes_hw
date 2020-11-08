@@ -11,10 +11,7 @@ class CustomCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-    
-    var refreshed = 0
     
     @IBOutlet weak var image_outlet: UIImageView!
     @IBOutlet weak var album_title_outlet: UILabel!

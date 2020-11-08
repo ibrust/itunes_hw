@@ -25,9 +25,7 @@ class RequestManager{
         self.fetch_operation = Fetch_List_Operation(self)
     }
     
-    // you could use an operation to fetch the image...?
-    // I don't think there's a downside to fetching the image from the database multiple times, but you are going to have to request this image somewhere.
-    // that might benefit from an operation
+    // use an operation to fetch the image instead of this function
     func fetch_image(){
         
     }
@@ -35,14 +33,7 @@ class RequestManager{
     func get_image(){
         
     }
-        
-    // should you use operations to fetch the song...?
-    // there's no real downside to repeatedly fetching the song, assuming it's there.
-    // what you really need is a way of knowing if the database is full or not.
-    
-    // cellforrowat is calling a function, but your model is automatically updating, correct?
-    // so I believe this function actually triggers the handler.
-    // the return of this function is what is detected by didset...
+
     func get_song_data(_ row: Int) -> SingleSong? {
         let context = AppDelegate.persistentContainer.viewContext
         var single_song = SingleSong()
@@ -52,19 +43,10 @@ class RequestManager{
         do{
             let results = try context.fetch(request)
             if results == [] {
-                print("it's [] for row: ", row)
-                
-                // there was some sort of intermittent bug with this ...
-                // not sure what it is. could check that the row is 0...?
-                // but that didn't even work at one point... 
                 if self.fetch_operation?.isFinished == false && self.fetch_operation?.isExecuting == false{
-                    print("fetching json operation at row: ", row)
                     self.operations_queue.addOperation(self.fetch_operation!)
                 }
-                
             } else {
-                print("it wasn't [] for row: ", row)
-                print("with: ", results.first?.artistName)
                 if let _ = results.first {
                     single_song = results.first!
                     return single_song
@@ -80,21 +62,11 @@ class RequestManager{
     func delete_song_data(_ row: Int){
         
     }
-    
-    
-    // so... I think this will fetch the data if it's required, and will be called once...
-    // but lets say the data is already in the database.
-    // dont you need to return the data then? you can't rely on notifications if nothing changes...
-    // you could just do nothing if it's already there, and manage that elsewhere.
-
-    // do you need a custom notification for the database call, in the event the json is already there, then? Because the data isn't always gona change.
-    
 }
 
 fileprivate class Fetch_List_Operation: Operation {
-    let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json"
-    
     var request_manager: RequestManager
+    let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json"
     
     init(_ request_manager: RequestManager){
         self.request_manager = request_manager

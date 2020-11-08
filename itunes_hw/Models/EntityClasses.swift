@@ -8,8 +8,15 @@
 import UIKit
 import CoreData
 
+struct JSON_struct: Codable {
+    var feed: Feed
+    struct Feed: Codable {
+        var results: [SingleSong]
+    }
+}
+
 enum DecoderConfigurationError: Error {
-    case missingManagedObjectContext
+    case Missing_Managed_Object_Context
 }
 
 extension CodingUserInfoKey {
@@ -28,12 +35,9 @@ class SingleSong: NSManagedObject, Codable {
     required convenience init(from decoder: Decoder) throws {
         guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext!] as? NSManagedObjectContext
         else{
-            throw DecoderConfigurationError.missingManagedObjectContext
+            throw DecoderConfigurationError.Missing_Managed_Object_Context
         }
-        
-        // got a 'bad access' error here, looked like a multithreaded issue...
-        // maybe try creating the json on the main thread or something...
-        // if you can do that, maybe use the app delegate context? 
+
         self.init(context: context)
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -48,7 +52,7 @@ class SingleSong: NSManagedObject, Codable {
         self.artistUrl = try container.decode(String.self, forKey: .artistUrl)
         self.artworkUrl100 = try container.decode(String.self, forKey: .artworkUrl100)
         
-        // you might actually check whether the genre is in the database before decoding it... right?
+        // you might actually check whether the genre is in the database before decoding it... but you'd need to connect them somehow, which may be tedious. save til the end
         self.genres = try container.decode(Set<SongGenre>.self, forKey: .genres) as NSSet
         
         do {
@@ -98,7 +102,7 @@ class SongGenre: NSManagedObject, Codable {
     required convenience init(from decoder: Decoder) throws {
         guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext!] as? NSManagedObjectContext
         else{
-            throw DecoderConfigurationError.missingManagedObjectContext
+            throw DecoderConfigurationError.Missing_Managed_Object_Context
         }
         self.init(context: context)
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -116,7 +120,6 @@ class SongGenre: NSManagedObject, Codable {
             let nserror = error as NSError
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
-
     }
     
     func encode(to encoder: Encoder) throws {
@@ -130,14 +133,5 @@ class SongGenre: NSManagedObject, Codable {
     
     enum CodingKeys: CodingKey {
         case genreId, name, url
-    }
-}
-
-
-struct JSON_struct: Codable {
-    var feed: Feed
-    
-    struct Feed: Codable {
-        var results: [SingleSong]
     }
 }

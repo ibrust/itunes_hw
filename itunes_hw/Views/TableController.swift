@@ -16,7 +16,6 @@ class TableController: UITableViewController {
     var current_image: UIImage? = nil
     private var observer: NSObjectProtocol?
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,24 +24,12 @@ class TableController: UITableViewController {
                 guard let self = self else{return}
                                 
                 let index_path = IndexPath(row: row, section: 0)
-                
-                let song_data = self.binder.return_song()
-                
                 let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
                 
-                //print("SONG DATA IS: ", row, song_data)
                 cell?.artist_name_outlet.text = self.binder.songs_array[row]?.artistName
                 cell?.album_title_outlet.text = self.binder.songs_array[row]?.unique_id
-                                
-                /* let index_path_array = [index_path]
-                // creates a cycle...
-                // how to solve this?
-                self.tableView.reloadRows(at: index_path_array, with: .none)*/
-                
             }
         }
-        
-        
         
         observer = NotificationCenter.default.addObserver(
             forName: .List_Fetch_Complete,
@@ -55,6 +42,7 @@ class TableController: UITableViewController {
                 self.tableView.reloadRows(at: [index_path], with: .none)
             }
         }
+        
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
             object: nil,
@@ -70,13 +58,11 @@ class TableController: UITableViewController {
                         if let single_song = inserted_entity as? SingleSong {
                             for path in visible_cells_index_paths!{
                                 if path.row == Int(single_song.unique_id!){
-                                    print("MATCHED SONG: ", single_song)
                                     let cell = self.tableView.cellForRow(at: path) as? CustomCell
                                     cell?.artist_name_outlet.text = single_song.artistName
                                     cell?.album_title_outlet.text = single_song.unique_id
                                 }
                             }
-                            
                         }
                     }
                 }
@@ -90,7 +76,6 @@ class TableController: UITableViewController {
             NotificationCenter.default.removeObserver(observer)
         }
     }
-    
     /*
     // MARK: - Navigation
 
@@ -100,8 +85,6 @@ class TableController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-
 }
 
 extension TableController {
@@ -115,17 +98,12 @@ extension TableController {
 
 
 extension TableController{
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuse_id, for: indexPath) as? CustomCell
-        print("IN CELL FOR ROW AT")
-        
         self.get_song_data(indexPath.row)
         
         return cell ?? CustomCell()
     }
-    
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return total_rows
     }
