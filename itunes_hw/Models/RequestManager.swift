@@ -100,66 +100,18 @@ fileprivate class Fetch_List_Operation: Operation {
     }
     
     override func main(){
-        fetch_json_list() { [weak self] in ()
-            guard let self = self else {return}
-            DispatchQueue.main.async {
-
-                // here the data was returned to the table after the fetch
-                // you might calla  bunch of database getter functions here ...
-                // depends how you want to do it
-                // you might only call the initial ones for the first couple of cells, too...
-                // or you could call refreshdata and cause the cells / prefetch
-                // functions to do it.. probably a better design actually
-                // but you need some sort of table controller reference for that...
-                // gona have to consider how to do that
-                
-                
-                
-                // I believe this is where you are going to do the notification...
-                
-                // try actually refetching the data first? but isn't cellforrowat supposed to do that?
-                // looks like they both need to do it ...
-                // but this doesn't even have access to the indices...
-                //
-                
-                
-                
-                NotificationCenter.default.post(name: .List_Fetch_Complete, object: self)
-                
-                
-                
-                /*
-                self.table_controller_reference?.tableView.reloadData()
-                for index in 0..<100) {
-                    if index < max_pokemon {
-                        fetch_pokemon_operations[index] = Fetch_Pokemon_Operation(index, self.table_controller_reference)
-                        operations_queue.addOperation(fetch_pokemon_operations[index]!)
-                    }
-                }
-                */
-            }
-        }
+        fetch_json_list()
     }
 
-    func fetch_json_list(completion: @escaping () -> () ){
+    func fetch_json_list(){
         guard let url_obj = URL(string: url) else {print("url issue");return}
         self.request_manager.session.dataTask(with: url_obj) { (data, response, error) in
             if let _ = error {print(error);return}
             guard let data = data else {return}
             do {
                 let json_struct = try self.request_manager.decoder.decode(JSON_struct.self, from: data)
-                print("FETCHING THE JSON IN OPERATION")
-                completion()
             }
             catch let json_error {print("error decoding json in fetch_json_list: ", json_error)}
-            
-            
-            
-            // don't think I really need this... try deleting it later
-            //self.request_manager.app_delegate.saveContext()
-            
-
-            
         }.resume()
     }
     
