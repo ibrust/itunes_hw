@@ -12,6 +12,7 @@ class Binder {
     var request_manager: RequestManager? = nil
     var songs_array = [SingleSong?](repeating: nil, count: total_rows)
     var bound_cellupdatehandler: ((Int) -> ())? = nil
+    var bound_imageupdatehandler: ((Int) -> ())? = nil
     
     var gotten_song: SingleSong? {
         willSet {
@@ -26,6 +27,7 @@ class Binder {
         }
     }
     
+    
     init(){
         self.request_manager = RequestManager()
     }
@@ -37,9 +39,6 @@ class Binder {
 
 
 extension Binder{
-    func get_image(_ row: Int){
-        
-    }
     func get_song_data(_ row: Int){
         self.gotten_song = self.request_manager?.get_song_data(row)
     }
