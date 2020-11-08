@@ -27,7 +27,6 @@ class Binder {
         }
     }
     
-    
     init(){
         self.request_manager = RequestManager()
     }
@@ -41,6 +40,9 @@ class Binder {
 extension Binder{
     func get_song_data(_ row: Int){
         self.gotten_song = self.request_manager?.get_song_data(row)
+    }
+    func return_song_data(_ row: Int) -> SingleSong? {
+        return self.songs_array[row]
     }
 }
 

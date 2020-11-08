@@ -94,15 +94,26 @@ class TableController: UITableViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "detail_segue", sender: indexPath.row)
     }
-    */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let sent_row = sender as? Int ?? 0
+        guard let detail_controller = segue.destination as? DetailController else{return}
+        
+        let song_data = self.binder.return_song_data(sent_row)
+        if let image_data = song_data?.image_data {
+            detail_controller.temp_image = UIImage(data: image_data)
+        }
+        if let artist_name = song_data?.artistName {
+            detail_controller.temp_artist_name = artist_name
+        }
+        /*
+        if let id = song_data?.unique_id {
+            detail_controller.
+        }*/
+    }
 }
 
 extension TableController {
