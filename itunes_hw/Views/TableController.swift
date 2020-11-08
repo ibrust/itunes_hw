@@ -13,9 +13,7 @@ let reuse_id = "custom_cell"
 class TableController: UITableViewController {
     
     var binder = Binder()
-    
     var current_image: UIImage? = nil
-    
     private var observer: NSObjectProtocol?
     
 
@@ -33,10 +31,10 @@ class TableController: UITableViewController {
                 let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
                 
                 //print("SONG DATA IS: ", row, song_data)
-                cell?.artist_name_outlet.text = song_data?.artistName
-                cell?.album_title_outlet.text = song_data?.unique_id
+                cell?.artist_name_outlet.text = self.binder.songs_array[row]?.artistName
+                cell?.album_title_outlet.text = self.binder.songs_array[row]?.unique_id
                                 
-                /*let index_path_array = [index_path]
+                /* let index_path_array = [index_path]
                 // creates a cycle...
                 // how to solve this?
                 self.tableView.reloadRows(at: index_path_array, with: .none)*/
@@ -129,7 +127,7 @@ extension TableController{
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return total_rows
     }
 }
 

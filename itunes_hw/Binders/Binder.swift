@@ -22,15 +22,17 @@ class Binder {
         // if you don't find something you want to do something else... right? we will see.
         willSet {
             if newValue != nil{
-                guard let temp = newValue as? SingleSong? else {return}
-                //print("HERE", temp)
-                guard let temp2 = temp?.unique_id else {return}
+                guard let single_song = newValue as? SingleSong? else {return}
+                guard let unique_id = single_song?.unique_id else {return}
                 print("WILLSET")
-                guard let number = Int(temp2) else {return}
-                bound_cellupdatehandler?(number)
+                guard let converted_id = Int(unique_id) else {return}
+                songs_array[converted_id] = single_song
+                bound_cellupdatehandler?(converted_id)
             }
         }
     }
+    
+    var songs_array = [SingleSong?](repeating: nil, count: total_rows)
     
     // this is called by an observer of the model when the model updates
     // it'll need to be passed an integer from the model somehow...

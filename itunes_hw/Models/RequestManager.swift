@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 
+let total_rows = 100
 
 class RequestManager{
     
