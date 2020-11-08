@@ -86,25 +86,38 @@ class TableController: UITableViewController {
             for index_path in index_paths!{
                 self.tableView.reloadRows(at: [index_path], with: .none)
             }
+        }
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
+            object: nil,
+            queue: nil) { (notification) in
             
-            NotificationCenter.default.addObserver(
-                forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
-                object: nil,
-                queue: nil) { (notification) in
-                
-                guard let user_info = notification.userInfo else {return}
-                
-                /*
-                print("in observer, calling bound_cellupdatehandler(1) with notification: ", notification)
-                print("user info: ", user_info)*/
+            guard let user_info = notification.userInfo else {return}
+            
+            /*
+            print("in observer, calling bound_cellupdatehandler(1) with notification: ", notification)
+            print("user info: ", user_info)*/
+            //print("CONTEXT CHANGED...")
+            DispatchQueue.main.async{
+                //let visible_cells = self.tableView.visibleCells
+                let visible_cells_index_paths = self.tableView.indexPathsForVisibleRows
                 
                 if let inserts = user_info[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-                    print("INSERTS: ", inserts)
+                    //print("INSERTS: ", inserts)
                     
                     for inserted_entity in inserts {
-                        print("IN INSERT...")
-                        if let bound_entity = inserted_entity as? SingleSong {
-                            print("INSERTED SONG: ", bound_entity)
+                        //print("IN INSERT...")
+                        if let single_song = inserted_entity as? SingleSong {
+                            
+                            for path in visible_cells_index_paths!{
+                                if path.row == Int(single_song.unique_id!){
+                                    print("MATCHED SONG: ", single_song)
+                                    let cell = self.tableView.cellForRow(at: path) as? CustomCell
+                                    cell?.artist_name_outlet.text = single_song.artistName
+                                    cell?.artist_name_outlet.text = single_song.unique_id
+                                }
+                            }
+                            
                         }
                         
                         //let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
@@ -118,14 +131,12 @@ class TableController: UITableViewController {
                     
                 }
             }
-            
-            
         }
         
         // try to initially refresh every one of these cells...?
         // but how do you ever refresh cells then?
         // what triggers the refresh?
-        let visible_cells = self.tableView.visibleCells
+        
         
     }
     
