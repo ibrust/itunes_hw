@@ -11,10 +11,32 @@ import UIKit
 
 class Binder {
     
-    var request_manager: RequestManager
+    var request_manager: RequestManager? = nil
     
-    var gotten_song: SingleSong? = nil
-    
+    var gotten_song: SingleSong? {
+        
+        // so I think that this class... being a database class, is somehow tied to the database.
+        // when the database is empty... you aren't accessing a real property in the database?
+        // it's not a regular property, it's a property preceded by something.
+        // really you don't want this to call unless you find something.
+        // if you don't find something you want to do something else... right? we will see.
+        willSet {
+            if newValue != nil{
+                guard let temp = newValue as? SingleSong? else {return}
+                print("HERE", temp)
+                guard let temp2 = temp?.unique_id else{return}
+                print("AND HERE")
+                guard let number = Int(temp2) else{return}
+                print("AAAND HERE")
+                bound_cellupdatehandler!(number)
+            } else {
+                if json_request_complete == false {
+                    bound_tablerefreshhandler?()
+                    json_request_complete == true
+                }
+            }
+        }
+    }
     
     // this is called by an observer of the model when the model updates
     // it'll need to be passed an integer from the model somehow...
@@ -22,11 +44,15 @@ class Binder {
     // the bound function will have access to the tableviews data - and thus the cell data through the integer, and also the model data through the intent functions (these are called within the closure)
     // note that this accesses the cells data and sets them to the intent functions of the binder (which simply return the data). this is all after the binder has been alerted of changes via the observer (which calls this)
     var bound_cellupdatehandler: ((Int) -> ())? = nil
+    var bound_tablerefreshhandler: (() -> ())? = nil
+    var json_request_complete = false
     
-    init(request_manager: RequestManager = RequestManager()){
-        self.request_manager = request_manager
-        /*let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json"
-        self.request_manager.fetch_json_list(url, completion: {print("complete");return})*/
+    init(){
+        self.request_manager = RequestManager()
+    }
+    
+    func bind_tablerefreshhandler(refresh_handler: @escaping () -> ()){
+        self.bound_tablerefreshhandler = refresh_handler
     }
     
     
@@ -67,7 +93,12 @@ extension Binder{
         
     }
     func get_song_data(_ row: Int){
-        self.gotten_song = self.request_manager.get_song_data(row)
+        self.gotten_song = self.request_manager?.get_song_data(row)
     }
+    
+    func return_song() -> SingleSong? {
+        return self.gotten_song
+    }
+    
 }
 

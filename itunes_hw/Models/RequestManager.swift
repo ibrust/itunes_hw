@@ -42,7 +42,7 @@ class RequestManager{
     // cellforrowat is calling a function, but your model is automatically updating, correct?
     // so I believe this function actually triggers the handler.
     // the return of this function is what is detected by didset...
-    func get_song_data(_ row: Int) -> SingleSong {
+    func get_song_data(_ row: Int) -> SingleSong? {
         let context = AppDelegate.persistentContainer.viewContext
         var single_song = SingleSong()
         let request: NSFetchRequest<SingleSong> = SingleSong.fetchRequest()
@@ -51,29 +51,29 @@ class RequestManager{
         do{
             let results = try context.fetch(request)
             if results == [] {
-                print("it's [] for row: ", row, results)
-                // maybe do a fetch json operation here?
+                //print("it's [] for row: ", row, results)
                 
+                // there was some sort of intermittent bug with this ...
+                // not sure what it is. could check that the row is 0...?
+                // but that didn't even work at one point... 
                 if self.fetch_operation?.isFinished == false && self.fetch_operation?.isExecuting == false{
                     print("fetching json operation at row: ", row)
                     self.operations_queue.addOperation(self.fetch_operation!)
                 }
                 
             } else {
-                print("it wasn't [] for row: ", row)
-                for x in results{
-                    print("X: ", x.unique_id)
+                //print("it wasn't [] for row: ", row, results)
+                //print("with: ", results.first?.artistName)
+                if let _ = results.first {
+                    single_song = results.first!
+                    return single_song
                 }
-                print("it wasn't [] for row: ", row, results)
             }
-            if let _ = results.first {
-                single_song = results.first!
-            }
+            
         } catch {
             print("ERROR FETCHING RESULTS", error)
         }
-        
-        return single_song
+        return nil
     }
     
     func delete_song_data(_ row: Int){

@@ -35,13 +35,22 @@ class TableController: UITableViewController {
         // or you could even come up with a mechanism that doesn't require this... like notifications maybe? not sure, really...
         // some sort of array observation mechanism.......? duno. 
         self.binder.bind_cellupdatehandler { [weak self] row in
+            print("in row: ", row, " cell update handler")
             DispatchQueue.main.async {
                 guard let self = self else{return}
                                 
                 let index_path = IndexPath(row: row, section: 0)
                 let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
-                let song_data = self.binder.get_song_data(row)
-                //cell?.album_title_outlet = song_data.albumTitle
+                let song_data = self.binder.return_song()
+                cell?.artist_name_outlet.text = song_data?.artistName
+                cell?.album_title_outlet.text = song_data?.unique_id
+            }
+        }
+        self.binder.bind_tablerefreshhandler(){ [weak self] in
+            DispatchQueue.main.async {
+                guard let self = self else{return}
+                
+                self.tableView.reloadData()
             }
         }
     }
