@@ -13,9 +13,6 @@ extension Notification.Name {
     static let List_Fetch_Complete = Notification.Name("List_Fetch_Complete")
 }
 
-// try adding this to a main operation queue of some sort if
-// you continue to have context update problems
-
 class Fetch_List_Operation: Operation {
     var request_manager: RequestManager
     let url = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json"
@@ -88,7 +85,7 @@ class Fetch_Image_Operation: Operation {
                         }
                     } catch {
                         let nserror = error as NSError
-                        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                        print("Unresolved error \(nserror), \(nserror.userInfo)")
                     }
                 }
             } catch {return}

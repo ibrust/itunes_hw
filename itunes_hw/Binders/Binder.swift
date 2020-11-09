@@ -12,7 +12,7 @@ class Binder {
     var request_manager: RequestManager? = nil
     var songs_array = [SingleSong?](repeating: nil, count: total_rows)
     var bound_cellupdatehandler: ((Int) -> ())? = nil
-    var bound_imageupdatehandler: ((Int) -> ())? = nil
+    var bound_star_togglehandler: ((Int) -> ())? = nil
     
     var gotten_song: SingleSong? {
         willSet {
@@ -34,6 +34,9 @@ class Binder {
     func bind_cellupdatehandler(update_handler: @escaping (Int) -> ()){
         self.bound_cellupdatehandler = update_handler
     }
+    func bind_star_togglehandler(update_handler: @escaping (Int) -> ()){
+        self.bound_star_togglehandler = update_handler
+    }
 }
 
 
@@ -43,6 +46,9 @@ extension Binder{
     }
     func return_song_data(_ row: Int) -> SingleSong? {
         return self.songs_array[row]
+    }
+    func toggle_star_button(_ row: Int) {
+        self.gotten_song = self.request_manager?.toggle_song_button(row)
     }
 }
 

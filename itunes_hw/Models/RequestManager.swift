@@ -39,12 +39,29 @@ class RequestManager{
                 }
             }
             else {
-                if var single_song = results.first {
+                if let single_song = results.first {
                     if single_song.image_data == nil {
                         if image_operations[row] != nil && image_operations[row]?.isFinished == false && image_operations[row]?.isExecuting == false{
                             operations_queue.addOperation(image_operations[row]!)
                         }
                     }
+                    return single_song
+                }
+            }
+        } catch {print("ERROR FETCHING RESULTS", error)}
+        return nil
+    }
+    
+    func toggle_song_button(_ row: Int) -> SingleSong? {
+        let context = AppDelegate.persistentContainer.viewContext
+        let request: NSFetchRequest<SingleSong> = SingleSong.fetchRequest()
+        request.predicate = NSPredicate(format: "unique_id = %@", String(row))
+
+        do{
+            let results = try context.fetch(request)
+            if results != [] {
+                if let single_song = results.first {
+                    single_song.star_toggle = !single_song.star_toggle
                     return single_song
                 }
             }

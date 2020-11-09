@@ -95,6 +95,7 @@
                                     <outlet property="album_title_outlet" destination="Eoi-ni-4Pv" id="JgJ-J0-bTi"/>
                                     <outlet property="artist_name_outlet" destination="oPr-X1-pYz" id="YV3-FZ-Hvw"/>
                                     <outlet property="image_outlet" destination="ZPg-r5-wpG" id="IDy-e7-2tX"/>
+                                    <outlet property="star_button_outlet" destination="65v-NJ-E3T" id="ZiA-lz-1kz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

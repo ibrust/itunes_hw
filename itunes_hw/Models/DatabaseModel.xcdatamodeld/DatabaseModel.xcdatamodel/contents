@@ -12,6 +12,7 @@
         <attribute name="kind" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="releaseDate" optional="YES" attributeType="String"/>
+        <attribute name="star_toggle" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="unique_id" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SongGenre" inverseName="associatedsong" inverseEntity="SongGenre"/>
@@ -23,7 +24,7 @@
         <relationship name="associatedsong" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SingleSong" inverseName="genres" inverseEntity="SingleSong"/>
     </entity>
     <elements>
-        <element name="SingleSong" positionX="-52.3984375" positionY="-13.05859375" width="128" height="253"/>
+        <element name="SingleSong" positionX="-52.3984375" positionY="-13.05859375" width="128" height="268"/>
         <element name="SongGenre" positionX="105.78515625" positionY="168.0078125" width="128" height="103"/>
     </elements>
 </model>
