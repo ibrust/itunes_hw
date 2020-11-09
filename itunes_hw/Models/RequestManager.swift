@@ -78,6 +78,21 @@ class RequestManager{
         } catch {print("ERROR FETCHING RESULTS", error)}
         return nil
     }
+    
+    func return_song(_ row: Int) -> SingleSong? {
+        let context = AppDelegate.persistentContainer.viewContext
+        let request: NSFetchRequest<SingleSong> = SingleSong.fetchRequest()
+        request.predicate = NSPredicate(format: "unique_id = %@", String(row))
+
+        do{
+            let results = try context.fetch(request)
+            if let single_song = results.first {
+                return single_song
+            }
+        } catch {print("ERROR FETCHING RESULTS", error)}
+        return nil
+    }
+    
 }
 
 

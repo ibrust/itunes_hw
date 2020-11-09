@@ -152,10 +152,8 @@ class TableController: UITableViewController {
         }
         if let toggle_state = song_data?.star_toggle {
             if toggle_state == true {
-                print("IT'S TRUE")
                 detail_controller.button_state = true
             } else if toggle_state == false {
-                print("IT'S FALSE")
                 detail_controller.button_state = false
             }
         }
@@ -165,17 +163,8 @@ class TableController: UITableViewController {
     }
 }
 
-extension TableController {
-    @objc func get_song_data(_ row: Int){
-        self.binder.get_song_data(row) 
-    }
-    @objc func toggle_star(_ row: Int){
-        self.binder.toggle_star_button(row)
-    }
-}
-
-
 extension TableController{
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuse_id, for: indexPath) as? CustomCell
         
@@ -185,13 +174,20 @@ extension TableController{
         }
         
         self.get_song_data(indexPath.row)
-        
-        print("IN CELL FOR ROW AT")
-        
+                
         return cell ?? CustomCell()
     }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return total_rows
     }
 }
 
+extension TableController {
+    @objc func get_song_data(_ row: Int){
+        self.binder.get_song_data(row)
+    }
+    @objc func toggle_star(_ row: Int){
+        self.binder.toggle_star_button(row)
+    }
+}
