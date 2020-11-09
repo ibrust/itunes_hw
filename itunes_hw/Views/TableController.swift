@@ -42,7 +42,7 @@ class TableController: UITableViewController {
                 if let image_data = self.binder.songs_array[row]?.image_data {
                     cell?.image_outlet.image = UIImage(data: image_data)
                 }
-                if let toggle_state = self.binder.songs_array[row]?.star_toggle {
+                if let toggle_state = self.binder.songs_array[row]?.star_toggle{
                     if toggle_state == false {
                         cell?.star_button_outlet.setImage(UIImage(systemName: "star"), for: .normal)
                     } else {
@@ -150,6 +150,18 @@ class TableController: UITableViewController {
             }
             detail_controller.temp_genres = genre_string
         }
+        if let toggle_state = song_data?.star_toggle {
+            if toggle_state == true {
+                print("IT'S TRUE")
+                detail_controller.button_state = true
+            } else if toggle_state == false {
+                print("IT'S FALSE")
+                detail_controller.button_state = false
+            }
+        }
+        
+        detail_controller.binder = self.binder
+        detail_controller.detail_id = sent_row
     }
 }
 
