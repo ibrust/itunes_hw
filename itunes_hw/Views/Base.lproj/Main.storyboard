@@ -55,7 +55,7 @@
                                                                 <constraint firstAttribute="height" constant="75" id="XuJ-aC-Si4"/>
                                                             </constraints>
                                                             <attributedString key="attributedText">
-                                                                <fragment content="album title">
+                                                                <fragment content="-">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <font key="NSFont" size="16" name="SFMono-Regular"/>
@@ -75,7 +75,7 @@
                                                                         <constraint firstAttribute="height" constant="75" id="L4s-mf-cgj"/>
                                                                     </constraints>
                                                                     <attributedString key="attributedText">
-                                                                        <fragment content="artist name">
+                                                                        <fragment content="-">
                                                                             <attributes>
                                                                                 <color key="NSColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <font key="NSFont" size="19" name="SFMono-Regular"/>
