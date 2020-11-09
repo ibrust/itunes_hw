@@ -31,8 +31,9 @@ class TableController: UITableViewController, UITableViewDataSourcePrefetching {
                 if let artist_name = self.binder.songs_array[row]?.artistName {
                     cell?.artist_name_outlet.text = artist_name
                 }
-                if let unique_id = self.binder.songs_array[row]?.unique_id {
-                    cell?.album_title_outlet.text = unique_id
+                if let album_name = self.binder.songs_array[row]?.name, let unique_id = self.binder.songs_array[row]?.unique_id {
+                    let rank = String(Int(unique_id)! + 1)
+                    cell?.album_title_outlet.text = rank + " - " + album_name
                 }
                 if let image_data = self.binder.songs_array[row]?.image_data {
                     cell?.image_outlet.image = UIImage(data: image_data)
@@ -75,11 +76,12 @@ class TableController: UITableViewController, UITableViewDataSourcePrefetching {
                             for path in visible_cells_index_paths!{
                                 if path.row == Int(single_song.unique_id!){
                                     let cell = self.tableView.cellForRow(at: path) as? CustomCell
-                                    if let artist_name = single_song.artistName{
+                                    if let artist_name = single_song.artistName {
                                         cell?.artist_name_outlet.text = artist_name
                                     }
-                                    if let unique_id = single_song.unique_id{
-                                        cell?.album_title_outlet.text = unique_id
+                                    if let album_name = single_song.name, let unique_id = single_song.unique_id {
+                                        let rank = String(Int(unique_id)! + 1)
+                                        cell?.album_title_outlet.text = rank + " - " + album_name
                                     }
                                 }
                             }
@@ -122,7 +124,8 @@ class TableController: UITableViewController, UITableViewDataSourcePrefetching {
             detail_controller.temp_artist_name = artist_name
         }
         if let id = song_data?.unique_id, let album_title = song_data?.name {
-            detail_controller.temp_album_title = id + " - " + album_title
+            let rank = String(Int(id)! + 1)
+            detail_controller.temp_album_title = rank + " - " + album_title
         }
         
         if let release_date = song_data?.releaseDate {
