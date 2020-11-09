@@ -17,7 +17,7 @@ let reuse_id = "custom_cell"
 // then refresh those, instead of just the currently viewed cells?
 // it's an option... it would allow for initial buffering...
 
-class TableController: UITableViewController {
+class TableController: UITableViewController, UITableViewDataSourcePrefetching {
     
     var binder = Binder()
     var current_image: UIImage? = nil
@@ -26,6 +26,8 @@ class TableController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.prefetchDataSource = self
         
         self.binder.bind_cellupdatehandler { [weak self] row in
             DispatchQueue.main.async {
@@ -86,11 +88,14 @@ class TableController: UITableViewController {
                                     if let unique_id = single_song.unique_id{
                                         cell?.album_title_outlet.text = unique_id
                                     }
-                                    if let image_data = single_song.image_data{
-                                        cell?.image_outlet.image = UIImage(data: image_data)
-                                        print("received an image update")
-                                    }
                                 }
+                            }
+                            if let image_data = single_song.image_data{
+                                let row = Int(single_song.unique_id!)
+                                let path = IndexPath(row: row!, section: 0)
+                                let cell = self.tableView.cellForRow(at: path) as? CustomCell
+                                cell?.image_outlet.image = UIImage(data: image_data)
+                                print("received an image update at: ", single_song.unique_id!)
                             }
                         }
                     }
@@ -182,6 +187,28 @@ extension TableController{
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return total_rows
+    }
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        var highest_row = 0
+        guard var highest_path: IndexPath = indexPaths.first else{return}
+        for path in indexPaths {
+            if path.row > highest_row{
+                highest_row = path.row
+                highest_path = path
+            }
+        }
+        print("PREFETCH: ", highest_row)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuse_id, for: highest_path) as? CustomCell
+        
+        cell?.cell_id = highest_row
+        if cell?.table_controller_reference == nil {
+            cell?.table_controller_reference = self
+        }
+        
+        self.get_song_data(highest_row)
+                
+        return
     }
 }
 

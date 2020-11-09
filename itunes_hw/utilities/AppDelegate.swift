@@ -11,8 +11,6 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
@@ -86,9 +84,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     static var updateContext: NSManagedObjectContext {
-        let _updateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        _updateContext.parent = AppDelegate.viewContext
-        return _updateContext
+        let update_context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        update_context.parent = AppDelegate.viewContext
+        return update_context
     }
 
 }
