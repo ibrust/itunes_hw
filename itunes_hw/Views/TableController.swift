@@ -109,10 +109,25 @@ class TableController: UITableViewController {
         if let artist_name = song_data?.artistName {
             detail_controller.temp_artist_name = artist_name
         }
+        
+        if let id = song_data?.unique_id, let album_title = song_data?.name {
+            detail_controller.temp_album_title = id + " - " + album_title
+        }
+        
+        if var release_date = song_data?.releaseDate {
+            var date_formatter = DateFormatter()
+            date_formatter.dateFormat = "yyyy-MM-dd"
+            var date_reformatter = DateFormatter()
+            date_reformatter.dateFormat = "MMM dd, yyyy"
+            if let date = date_formatter.date(from: release_date){
+                detail_controller.temp_release_date = date_reformatter.string(from: date)
+            } else{
+                detail_controller.temp_release_date = release_date
+            }
+        }
+        
         /*
-        if let id = song_data?.unique_id {
-            detail_controller.
-        }*/
+         var temp_genres: String? = nil */
     }
 }
 

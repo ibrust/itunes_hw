@@ -216,7 +216,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="z0X-Hz-xjT"/>
                     <connections>
+                        <outlet property="artist_name_outlet" destination="llX-gw-8aJ" id="dXu-xV-LVD"/>
+                        <outlet property="genres_outlet" destination="wqi-Sq-CW8" id="wjp-yy-IsZ"/>
                         <outlet property="image_view_outlet" destination="dIN-RF-gYy" id="dvp-nF-jTf"/>
+                        <outlet property="release_date_outlet" destination="M0w-gw-zcr" id="ZeF-FE-pFa"/>
+                        <outlet property="star_button_outlet" destination="XkP-1z-CTH" id="qLZ-ij-jbf"/>
                         <outlet property="title_label_outlet" destination="v8r-6J-2D6" id="Pj4-z1-xae"/>
                     </connections>
                 </viewController>
