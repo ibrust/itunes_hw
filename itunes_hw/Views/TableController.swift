@@ -114,10 +114,10 @@ class TableController: UITableViewController {
             detail_controller.temp_album_title = id + " - " + album_title
         }
         
-        if var release_date = song_data?.releaseDate {
-            var date_formatter = DateFormatter()
+        if let release_date = song_data?.releaseDate {
+            let date_formatter = DateFormatter()
             date_formatter.dateFormat = "yyyy-MM-dd"
-            var date_reformatter = DateFormatter()
+            let date_reformatter = DateFormatter()
             date_reformatter.dateFormat = "MMM dd, yyyy"
             if let date = date_formatter.date(from: release_date){
                 detail_controller.temp_release_date = date_reformatter.string(from: date)
@@ -126,8 +126,16 @@ class TableController: UITableViewController {
             }
         }
         
-        /*
-         var temp_genres: String? = nil */
+        if let genres = song_data?.genres {
+            var genre_string = "GENRES:\n"
+            for genre in genres {
+                let converted_genre = genre as? SongGenre
+                if converted_genre?.name != "Music"{
+                    genre_string += ((converted_genre?.name) ?? "" ) + "\n"
+                }
+            }
+            detail_controller.temp_genres = genre_string
+        }
     }
 }
 
