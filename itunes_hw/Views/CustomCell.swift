@@ -26,4 +26,9 @@ class CustomCell: UITableViewCell {
         table_controller_reference?.toggle_star(cell_id)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 1, left: 0, bottom: 1, right: 0))
+    }
+    
 }
