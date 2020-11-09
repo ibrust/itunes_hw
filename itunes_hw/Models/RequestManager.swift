@@ -37,28 +37,21 @@ class RequestManager{
                 if fetch_operation?.isFinished == false && fetch_operation?.isExecuting == false {
                     operations_queue.addOperation(fetch_operation!)
                 }
-            } else {
+            }
+            else {
                 if var single_song = results.first {
                     if single_song.image_data == nil {
                         if image_operations[row] != nil && image_operations[row]?.isFinished == false && image_operations[row]?.isExecuting == false{
                             operations_queue.addOperation(image_operations[row]!)
                         }
                     }
-                    
                     return single_song
                 }
             }
-            
-        } catch {
-            print("ERROR FETCHING RESULTS", error)
-        }
+        } catch {print("ERROR FETCHING RESULTS", error)}
         return nil
     }
 }
 
 
-
-extension Notification.Name {
-    static let List_Fetch_Complete = Notification.Name("List_Fetch_Complete")
-}
 

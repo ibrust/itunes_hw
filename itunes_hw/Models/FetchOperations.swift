@@ -9,6 +9,9 @@ import UIKit
 import CoreData
 
 
+extension Notification.Name {
+    static let List_Fetch_Complete = Notification.Name("List_Fetch_Complete")
+}
 
 // try adding this to a main operation queue of some sort if
 // you continue to have context update problems
@@ -91,7 +94,7 @@ class Fetch_Image_Operation: Operation {
             } catch {return}
             
         }.resume()
-    } 
+    }
 }
 
 
