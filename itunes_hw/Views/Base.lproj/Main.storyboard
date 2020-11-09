@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Top Songs-->
+        <!--Top Albums-->
         <scene sceneID="Ogd-4d-tsc">
             <objects>
                 <tableViewController id="F8m-nF-qxp" customClass="TableController" customModule="itunes_hw" customModuleProvider="target" sceneMemberID="viewController">
@@ -27,38 +27,67 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rml-jq-n1u">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZPg-r5-wpG">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="grT-2N-iWP">
                                                     <rect key="frame" x="0.0" y="0.0" width="203" height="150"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZPg-r5-wpG">
+                                                            <rect key="frame" x="30" y="30" width="90" height="90"/>
+                                                            <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="ZPg-r5-wpG" secondAttribute="height" multiplier="1:1" id="QUL-X3-fJX"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="150" id="poR-H0-F6K"/>
+                                                        <constraint firstItem="ZPg-r5-wpG" firstAttribute="leading" secondItem="grT-2N-iWP" secondAttribute="leading" constant="30" id="J2e-JC-Qgf"/>
+                                                        <constraint firstItem="ZPg-r5-wpG" firstAttribute="top" secondItem="grT-2N-iWP" secondAttribute="top" constant="30" id="O5T-mw-WIP"/>
+                                                        <constraint firstAttribute="bottom" secondItem="ZPg-r5-wpG" secondAttribute="bottom" constant="30" id="WEM-BX-rD9"/>
                                                     </constraints>
-                                                </imageView>
+                                                </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="sFF-II-0O0">
                                                     <rect key="frame" x="211" y="0.0" width="203" height="150"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="album title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eoi-ni-4Pv">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eoi-ni-4Pv">
                                                             <rect key="frame" x="0.0" y="0.0" width="203" height="75"/>
+                                                            <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="75" id="XuJ-aC-Si4"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="album title">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" size="16" name="SFMono-Regular"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8qp-4q-q5h">
                                                             <rect key="frame" x="0.0" y="75" width="203" height="75"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="artist name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPr-X1-pYz">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPr-X1-pYz">
                                                                     <rect key="frame" x="0.0" y="0.0" width="203" height="75"/>
+                                                                    <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="75" id="L4s-mf-cgj"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
+                                                                    <attributedString key="attributedText">
+                                                                        <fragment content="artist name">
+                                                                            <attributes>
+                                                                                <color key="NSColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                <font key="NSFont" size="19" name="SFMono-Regular"/>
+                                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                            </attributes>
+                                                                        </fragment>
+                                                                    </attributedString>
                                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="65v-NJ-E3T">
                                                                     <rect key="frame" x="173" y="45" width="30" height="30"/>
+                                                                    <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="30" id="1qR-42-baL"/>
                                                                         <constraint firstAttribute="height" constant="30" id="Un6-2o-YaM"/>
@@ -84,6 +113,7 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="rml-jq-n1u" secondAttribute="trailing" id="8iD-uu-Tsl"/>
                                         <constraint firstAttribute="bottom" secondItem="rml-jq-n1u" secondAttribute="bottom" id="Al2-HK-APd"/>
@@ -104,7 +134,7 @@
                             <outlet property="delegate" destination="F8m-nF-qxp" id="XhC-hK-HS8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Top Songs" id="LKw-Bm-TJq"/>
+                    <navigationItem key="navigationItem" title="Top Albums" id="LKw-Bm-TJq"/>
                     <connections>
                         <segue destination="VBB-0J-t1q" kind="show" identifier="detail_segue" id="ESR-40-N8a"/>
                     </connections>
@@ -122,16 +152,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="wcm-WJ-KCp">
-                                <rect key="frame" x="0.0" y="168" width="414" height="728"/>
+                                <rect key="frame" x="0.0" y="178" width="414" height="718"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dIN-RF-gYy">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="364"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="359"/>
+                                        <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cQ-Tz-0ES">
-                                        <rect key="frame" x="0.0" y="364" width="414" height="364"/>
+                                        <rect key="frame" x="0.0" y="359" width="414" height="359"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XkP-1z-CTH">
-                                                <rect key="frame" x="374" y="324" width="40" height="40"/>
+                                                <rect key="frame" x="374" y="319" width="40" height="40"/>
+                                                <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="DHi-ah-bff"/>
                                                     <constraint firstAttribute="width" constant="40" id="moa-IZ-5Ol"/>
@@ -141,14 +173,22 @@
                                                     <action selector="star_button_pressed:" destination="VBB-0J-t1q" eventType="touchUpInside" id="NPx-6x-crB"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genres" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqi-Sq-CW8">
-                                                <rect key="frame" x="8" y="0.0" width="406" height="364"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqi-Sq-CW8">
+                                                <rect key="frame" x="8" y="0.0" width="406" height="359"/>
+                                                <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Genres">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <font key="NSFont" size="30" name="SFMono-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="wqi-Sq-CW8" secondAttribute="bottom" id="0Bj-Wn-Rh5"/>
                                             <constraint firstItem="wqi-Sq-CW8" firstAttribute="leading" secondItem="9cQ-Tz-0ES" secondAttribute="leading" constant="8" id="Cz4-0d-3jO"/>
@@ -160,43 +200,67 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Album" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8r-6J-2D6">
-                                <rect key="frame" x="0.0" y="88" width="414" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8r-6J-2D6">
+                                <rect key="frame" x="0.0" y="88" width="414" height="30"/>
+                                <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="J5d-vo-2SP"/>
+                                    <constraint firstAttribute="height" constant="30" id="J5d-vo-2SP"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Album">
+                                        <attributes>
+                                            <color key="NSColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="22" name="SFMono-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ck7-XT-hMr">
-                                <rect key="frame" x="0.0" y="128" width="414" height="40"/>
+                                <rect key="frame" x="0.0" y="118" width="414" height="60"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dbq-0S-dvl">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dbq-0S-dvl">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llX-gw-8aJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="207" height="40"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llX-gw-8aJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                                                <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Artist">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <font key="NSFont" size="26" name="SFMono-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0w-gw-zcr">
-                                                <rect key="frame" x="207" y="0.0" width="207" height="40"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0w-gw-zcr">
+                                                <rect key="frame" x="0.0" y="30" width="414" height="30"/>
+                                                <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Date">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <font key="NSFont" size="18" name="SFMono-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="dbq-0S-dvl" secondAttribute="trailing" id="9IT-sU-yN3"/>
                                     <constraint firstItem="dbq-0S-dvl" firstAttribute="leading" secondItem="Ck7-XT-hMr" secondAttribute="leading" id="S30-k4-7h7"/>
                                     <constraint firstAttribute="bottom" secondItem="dbq-0S-dvl" secondAttribute="bottom" id="SJT-hr-04S"/>
                                     <constraint firstItem="dbq-0S-dvl" firstAttribute="top" secondItem="Ck7-XT-hMr" secondAttribute="top" id="SUh-ZE-2A7"/>
-                                    <constraint firstAttribute="height" constant="40" id="jNa-He-x1C"/>
+                                    <constraint firstAttribute="height" constant="60" id="jNa-He-x1C"/>
                                 </constraints>
                             </view>
                         </subviews>

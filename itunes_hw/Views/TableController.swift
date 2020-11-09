@@ -10,13 +10,6 @@ import CoreData
 
 let reuse_id = "custom_cell"
 
-
-// an idea for the prefetching - you could keep a log of all the prefetched
-// indices and append this to an array of currently viewed cells?
-// eliminating redundancies
-// then refresh those, instead of just the currently viewed cells?
-// it's an option... it would allow for initial buffering...
-
 class TableController: UITableViewController, UITableViewDataSourcePrefetching {
     
     var binder = Binder()
@@ -95,7 +88,6 @@ class TableController: UITableViewController, UITableViewDataSourcePrefetching {
                                 let path = IndexPath(row: row!, section: 0)
                                 let cell = self.tableView.cellForRow(at: path) as? CustomCell
                                 cell?.image_outlet.image = UIImage(data: image_data)
-                                print("received an image update at: ", single_song.unique_id!)
                             }
                         }
                     }
@@ -121,7 +113,6 @@ class TableController: UITableViewController, UITableViewDataSourcePrefetching {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let sent_row = sender as? Int ?? 0
         guard let detail_controller = segue.destination as? DetailController else{return}
-        
         let song_data = self.binder.return_song_data(sent_row)
         
         if let image_data = song_data?.image_data {
@@ -130,7 +121,6 @@ class TableController: UITableViewController, UITableViewDataSourcePrefetching {
         if let artist_name = song_data?.artistName {
             detail_controller.temp_artist_name = artist_name
         }
-        
         if let id = song_data?.unique_id, let album_title = song_data?.name {
             detail_controller.temp_album_title = id + " - " + album_title
         }
@@ -146,7 +136,6 @@ class TableController: UITableViewController, UITableViewDataSourcePrefetching {
                 detail_controller.temp_release_date = release_date
             }
         }
-        
         if let genres = song_data?.genres {
             var genre_string = "GENRES:\n"
             for genre in genres {
@@ -169,6 +158,7 @@ class TableController: UITableViewController, UITableViewDataSourcePrefetching {
         detail_controller.detail_id = sent_row
     }
 }
+
 
 extension TableController{
     
@@ -198,7 +188,6 @@ extension TableController{
                 highest_path = path
             }
         }
-        print("PREFETCH: ", highest_row)
         let cell = tableView.dequeueReusableCell(withIdentifier: reuse_id, for: highest_path) as? CustomCell
         
         cell?.cell_id = highest_row

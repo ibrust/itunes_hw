@@ -25,11 +25,6 @@ extension CodingUserInfoKey {
 
 class SingleSong: NSManagedObject, Codable {
     
-    // it would probably be better to create this in the json and then
-    // decode it here... so actually add to the json
-    // that way you ensure it's all in order, it's not clear that
-    // the constructed objects will always be in order... also this is
-    // a strange mechanism when you divide it by 2 down below
     static var static_unique_id = 0
 
     required convenience init(from decoder: Decoder) throws {
@@ -52,7 +47,6 @@ class SingleSong: NSManagedObject, Codable {
         self.artistUrl = try container.decode(String.self, forKey: .artistUrl)
         self.artworkUrl100 = try container.decode(String.self, forKey: .artworkUrl100)
         
-        // you might actually check whether the genre is in the database before decoding it... but you'd need to connect them somehow, which may be tedious. save til the end
         self.genres = try container.decode(Set<SongGenre>.self, forKey: .genres) as NSSet
         
         do {
@@ -87,7 +81,6 @@ class SingleSong: NSManagedObject, Codable {
     
     override func awakeFromInsert(){
         super.awakeFromInsert()
-        // it awakes from insert twice since i save it in a child and parent context, apparently...
         if Int(SingleSong.static_unique_id) % 2 == 0 {
             unique_id = String(SingleSong.static_unique_id / 2)
         }
@@ -128,7 +121,6 @@ class SongGenre: NSManagedObject, Codable {
         try container.encode(genreId, forKey: .genreId)
         try container.encode(name, forKey: .name)
         try container.encode(url, forKey: .url)
-
     }
     
     enum CodingKeys: CodingKey {
