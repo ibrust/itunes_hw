@@ -33,11 +33,9 @@ class DetailController: UIViewController {
         self.binder?.toggle_star_button(detail_id)
         
         if self.button_state == true {
-            print("TRUETRUE")
             self.star_button_outlet.setImage(UIImage(systemName: "star"), for: .normal)
             button_state = false
         } else if self.button_state == false {
-            print("FALSEFALSE")
             self.star_button_outlet.setImage(UIImage(systemName: "star.fill"), for: .normal)
             button_state = true
         }
@@ -51,10 +49,8 @@ class DetailController: UIViewController {
         self.title_label_outlet.text = temp_album_title ?? ""
         self.release_date_outlet.text = temp_release_date ?? ""
         if self.button_state == false {
-            print("TRUETRUE")
             self.star_button_outlet.setImage(UIImage(systemName: "star"), for: .normal)
         } else if self.button_state == true {
-            print("FALSEFALSE")
             self.star_button_outlet.setImage(UIImage(systemName: "star.fill"), for: .normal)
         }
     }
