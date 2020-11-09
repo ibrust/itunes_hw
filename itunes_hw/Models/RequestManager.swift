@@ -43,6 +43,9 @@ class RequestManager{
                     if single_song.image_data == nil {
                         if image_operations[row] != nil && image_operations[row]?.isFinished == false && image_operations[row]?.isExecuting == false{
                             operations_queue.addOperation(image_operations[row]!)
+                        } else if image_operations[row] == nil {
+                            image_operations[row] = Fetch_Image_Operation(self, song: single_song)
+                            operations_queue.addOperation(image_operations[row]!)
                         }
                     }
                     return single_song
@@ -87,6 +90,7 @@ class RequestManager{
         do{
             let results = try context.fetch(request)
             if let single_song = results.first {
+                print("single song: ", single_song)
                 return single_song
             }
         } catch {print("ERROR FETCHING RESULTS", error)}

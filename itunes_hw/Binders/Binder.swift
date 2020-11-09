@@ -41,15 +41,8 @@ extension Binder{
         self.gotten_song = self.request_manager?.get_song_data(row)
     }
     func return_song_data(_ row: Int) -> SingleSong? {
-        
-        // do a fetch of the image here?
-        if self.songs_array[row]?.image_data == nil{
-            let song = self.request_manager?.return_song(row)
-            print("returning song...", song)
-            return song
-        } else{
-            return self.songs_array[row]
-        }
+        print("return_songs_data - songs_array[row]: ", songs_array[row])
+        return self.songs_array[row]
     }
 
     func toggle_star_button(_ row: Int) {

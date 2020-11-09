@@ -88,6 +88,7 @@ class TableController: UITableViewController {
                                     }
                                     if let image_data = single_song.image_data{
                                         cell?.image_outlet.image = UIImage(data: image_data)
+                                        print("received an image update")
                                     }
                                 }
                             }
@@ -117,6 +118,7 @@ class TableController: UITableViewController {
         guard let detail_controller = segue.destination as? DetailController else{return}
         
         let song_data = self.binder.return_song_data(sent_row)
+        
         if let image_data = song_data?.image_data {
             detail_controller.temp_image = UIImage(data: image_data)
         }
