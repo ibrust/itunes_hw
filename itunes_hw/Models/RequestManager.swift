@@ -42,8 +42,10 @@ class RequestManager{
                 if let single_song = results.first {
                     if single_song.image_data == nil {
                         if image_operations[row] != nil && image_operations[row]?.isFinished == false && image_operations[row]?.isExecuting == false{
+                            
                             operations_queue.addOperation(image_operations[row]!)
                         } else if image_operations[row] == nil {
+                            
                             image_operations[row] = Fetch_Image_Operation(self, song: single_song)
                             operations_queue.addOperation(image_operations[row]!)
                         }

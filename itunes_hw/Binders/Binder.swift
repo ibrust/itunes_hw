@@ -41,7 +41,6 @@ extension Binder{
         self.gotten_song = self.request_manager?.get_song_data(row)
     }
     func return_song_data(_ row: Int) -> SingleSong? {
-        print("return_songs_data - songs_array[row]: ", songs_array[row])
         return self.songs_array[row]
     }
 
