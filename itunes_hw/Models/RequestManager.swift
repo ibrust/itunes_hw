@@ -62,6 +62,16 @@ class RequestManager{
             if results != [] {
                 if let single_song = results.first {
                     single_song.star_toggle = !single_song.star_toggle
+                    
+                    if context.hasChanges {
+                        do {
+                            try context.save()
+                        } catch {
+                            let nserror = error as NSError
+                            print("Unresolved error \(nserror), \(nserror.userInfo)")
+                        }
+                    }
+                    
                     return single_song
                 }
             }

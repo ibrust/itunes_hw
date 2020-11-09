@@ -17,8 +17,6 @@ let reuse_id = "custom_cell"
 // then refresh those, instead of just the currently viewed cells?
 // it's an option... it would allow for initial buffering...
 
-
-
 class TableController: UITableViewController {
     
     var binder = Binder()
@@ -44,18 +42,8 @@ class TableController: UITableViewController {
                 if let image_data = self.binder.songs_array[row]?.image_data {
                     cell?.image_outlet.image = UIImage(data: image_data)
                 }
-            }
-        }
-        
-        self.binder.bind_star_togglehandler { [weak self] row in
-            DispatchQueue.main.async{
-                guard let self = self else{return}
-                
-                let index_path = IndexPath(row: row, section: 0)
-                let cell = self.tableView.cellForRow(at: index_path) as? CustomCell
-                
                 if let toggle_state = self.binder.songs_array[row]?.star_toggle {
-                    if toggle_state == true {
+                    if toggle_state == false {
                         cell?.star_button_outlet.setImage(UIImage(systemName: "star"), for: .normal)
                     } else {
                         cell?.star_button_outlet.setImage(UIImage(systemName: "star.fill"), for: .normal)
@@ -169,12 +157,21 @@ extension TableController {
     @objc func get_song_data(_ row: Int){
         self.binder.get_song_data(row) 
     }
+    @objc func toggle_star(_ row: Int){
+        self.binder.toggle_star_button(row)
+    }
 }
 
 
 extension TableController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuse_id, for: indexPath) as? CustomCell
+        
+        cell?.cell_id = indexPath.row
+        if cell?.table_controller_reference == nil {
+            cell?.table_controller_reference = self
+        }
+        
         self.get_song_data(indexPath.row)
         
         print("IN CELL FOR ROW AT")
